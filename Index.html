@@ -1,3 +1,47 @@
+<html lang="en">
+<head>
+    <!-- 01. Document Head & Inline Critical Styles ------------------ -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Club</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Critical page-level animations / backgrounds */
+        html { scroll-behavior: smooth; }
+        body {
+            background: linear-gradient(135deg, #0062ff, #f4f4f4 0%, #e0e7ff 100%, #ffbb00);
+            background-size: 400% 400%;
+            animation: gradientMove 12s ease-in-out infinite;
+            transition: background 1s;
+        }
+        @keyframes gradientMove { 0% {background-position:0% 50%;} 50% {background-position:100% 50%;} 100% {background-position:0% 50%;} }
+        body.dark-theme { background: linear-gradient(135deg, #ffffff, #000000, #ffffff, #000000); background-size: 400% 400%; animation: gradientMove 12s ease-in-out infinite; }
+
+        /* Membership tag flair */
+        .membership-tag { background: #fbbf24; color: #222; font-weight: bold; padding: 6px 14px; border-radius: 16px; margin-left: 10px; font-size: 0.98em; letter-spacing: 0.5px; vertical-align: middle; box-shadow: 0 2px 8px rgba(251,191,36,0.12); animation: tagPop 0.8s; }
+        @keyframes tagPop { 0% { transform: scale(0.7); opacity: 0; } 60% { transform: scale(1.15); opacity: 1; } 100% { transform: scale(1); } }
+
+        /* Sign-in progress bar */
+        #signinProgress { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: transparent; display: none; z-index: 2000; }
+        #signinProgress .bar { width: 0%; height: 100%; background: #3b82f6; box-shadow: 0 0 12px #3b82f6aa; transition: width .6s ease; }
+        body.dark-theme #signinProgress .bar { background: #fbbf24; box-shadow: 0 0 12px #fbbf24aa; }
+
+        /* Generic modal backdrop */
+        .modal-backdrop { position: fixed; inset: 0; display: none; place-items: center; background: rgba(0,0,0,0.45); z-index: 2100; }
+        .modal-backdrop[hidden] { display: none; }
+        .modal-backdrop:not([hidden]) { display: grid; }
+
+        /* Boot overlay */
+        #bootOverlay { position: fixed; inset: 0; background: #000000ee; display: none; place-items: center; z-index: 3000; }
+        #bootOverlay[hidden] { display: none; }
+        #bootOverlay:not([hidden]) { display: grid; }
+        #bootOverlay .spinner { width: 56px; height: 56px; border: 4px solid #1f2937; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.9s linear infinite; }
+        #bootOverlay .label { color:#e5e7eb; margin-top:12px; font-family: Segoe UI, Arial, sans-serif; }
+        body.dark-theme #bootOverlay .spinner { border-top-color: #fbbf24; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
 <!-- 06. Prices / Plans -------------------------------------------- -->
     <section id="prices" class="content-section animate-section">
         <h2>Prices</h2>
@@ -32,4 +76,6 @@
                 </ul>
             </div>
         </div>
+
+        </html>
     </section>
