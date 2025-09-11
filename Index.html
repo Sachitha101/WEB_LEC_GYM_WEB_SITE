@@ -109,3 +109,57 @@
 
         </html>
     </section>
+
+    <!-- 09. Equipment & Supplement Shop + Cart ------------------------ -->
+    <section id="equipmentshop" class="content-section animate-section">
+        <h2>Equipment & Supplement Shop</h2>
+        <div class="cards-container" style="margin-bottom:32px;">
+            <!-- Shop items -->
+            <div class="card neon-hover">
+                <img src="images/download.webp" alt="Dumbbells" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Dumbbells</h3>
+                <p>Rent: $5/day | Buy: $15</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Dumbbells', 15)">Add to Cart</button>
+                <button class="shop-btn rent-btn" onclick="addToCart('Dumbbells (Rent)', 5)">Rent</button>
+            </div>
+            <div class="card neon-hover">
+                <img src="images/OIP (2).webp" alt="Yoga Mat" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Yoga Mat</h3>
+                <p>Rent: $2/day | Buy: $10</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Yoga Mat', 10)">Add to Cart</button>
+                <button class="shop-btn rent-btn" onclick="addToCart('Yoga Mat (Rent)', 2)">Rent</button>
+            </div>
+            <div class="card neon-hover">
+                <img src="images/R.jpg" alt="Treadmill" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Treadmill</h3>
+                <p>Rent: $20/day | Buy: $250</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Treadmill', 250)">Add to Cart</button>
+                <button class="shop-btn rent-btn" onclick="addToCart('Treadmill (Rent)', 20)">Rent</button>
+            </div>
+            <div class="card neon-hover">
+                <img src="images/RUSH-WEB-LP-WK3-011320-Protein-Update-103041_Landing-Page_Desktop_10.jpg" alt="Protein Powder" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Protein Powder</h3>
+                <p>Buy: $30</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Protein Powder', 30)">Add to Cart</button>
+            </div>
+            <div class="card neon-hover">
+                <img src="images/OIP (3).webp" alt="Creatine" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Creatine</h3>
+                <p>Buy: $18</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Creatine', 18)">Add to Cart</button>
+            </div>
+            <div class="card neon-hover">
+                <img src="images/OIP (4).webp" alt="Multivitamin" class="card-img" style="width:80px;height:80px;object-fit:cover;border-radius:12px;margin-bottom:12px;">
+                <h3>Multivitamin</h3>
+                <p>Buy: $12</p>
+                <button class="shop-btn add-btn" onclick="addToCart('Multivitamin', 12)">Add to Cart</button>
+            </div>
+        </div>
+        <div id="cartSection" class="content-section" style="max-width:400px;margin:32px auto;">
+            <h3>Your Cart</h3>
+            <ul id="cartList"></ul>
+            <div><strong>Total: $<span id="cartTotal">0</span></strong></div>
+            <button id="checkoutBtn" style="margin-top:14px;background:#3b82f6;color:#fff;border:none;border-radius:8px;padding:10px 0;font-size:1.1em;cursor:pointer;">Checkout</button>
+            <div id="checkout-success" style="display:none; color: #16a34a; margin-top:10px; font-weight:600;">Thank you for your purchase!</div>
+        </div>
+    </section>
