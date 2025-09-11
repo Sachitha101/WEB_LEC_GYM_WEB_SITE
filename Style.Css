@@ -181,7 +181,30 @@ body.dark-theme .add-btn:hover, body.dark-theme .add-btn:focus { background: #3b
 body.dark-theme .rent-btn { background: #22c55e; color: #23272f; }
 body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #16a34a; color: #fff; }
 >>>>>>> Stashed changes
+/* 10. Highlight / Top Cards --------------------------------------------- */
+.topcard {
+    transition: 
+        box-shadow 0.4s cubic-bezier(.4,0,.2,1),
+        transform 0.4s cubic-bezier(.4,0,.2,1),
+        background 0.3s,
+        border 0.3s;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    border: 2px solid transparent;
+}
 
+.topcard:hover, .topcard:focus {
+    box-shadow: 0 12px 48px 0 #3b82f6cc, 0 0 32px 0 #fbbf2444;
+    transform: scale(1.06) translateY(-10px) rotate(-2deg);
+    background: linear-gradient(120deg, #e0e7ff 60%, #f4f4f4 100%);
+    border: 2.5px solid #3b82f6;
+    outline: none;
+    z-index: 3;
+}
+
+.topcard:active { transform: scale(0.98); }
+.topcard .card-img { display: none !important; }
 /* 16. Footer ------------------------------------------------------------- */
 footer { background: #f4f4f4; color: #23272f; text-align: center; padding: 24px 0 12px 0; border-radius: 16px 16px 0 0; margin-top: 32px; }
 footer a,
