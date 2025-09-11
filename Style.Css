@@ -146,6 +146,30 @@
         transform: translateY(0);
     }
 =======
+
+/* 07. Gallery ----------------------------------------------------------- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 24px rgba(59,130,246,0.15);
+}
+
+
 /*<!--12. Contact Info ---------------------------------------------- -->*/
 .shop-btn { font-size: 1em; font-weight: 600; border: none; border-radius: 8px; padding: 10px 22px; margin: 6px 8px 0 0; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(59,130,246,0.08); }
 .add-btn { background: #3b82f6; color: #fff; }
