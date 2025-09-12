@@ -202,6 +202,37 @@ body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #
     outline: none;
     z-index: 3;
 }
+/* 14. Semantic Color & Text Resets -------------------------------------- */
+body { color: #23272f; }
+
+h1, h2, h3, h4, h5, h6 { color: #3b82f6; }
+
+.content-section,
+.card,
+.price-card { background: #fff; color: #23272f; }
+
+.card h3,
+.price-card h3 { color: #3b82f6; }
+
+ul,
+ol,
+li,
+p,
+label,
+span,
+a { color: #23272f; }
+
+.feedback-form input,
+.feedback-form textarea { background: #f8fafc; color: #23272f; border: 1px solid #cbd5e1; }
+.feedback-form input:focus,
+.feedback-form textarea:focus { border: 1.5px solid #3b82f6; }
+.feedback-form button { background: #3b82f6; color: #fff; }
+.feedback-form button:hover { background: #2563eb; color: #fff; }
+.membership-tag { background: #fbbf24; color: #23272f; }
+#feedback-success { color: #16a34a; }
+strong, b { color: #fbbf24; }
+::placeholder { color: #64748b; opacity: 1; }
+.gallery-img { color: #23272f; }
 
 .topcard:active { transform: scale(0.98); }
 .topcard .card-img { display: none !important; }
