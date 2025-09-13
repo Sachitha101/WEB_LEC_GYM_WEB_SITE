@@ -232,6 +232,57 @@ body.dark-theme .add-btn:hover, body.dark-theme .add-btn:focus { background: #3b
 body.dark-theme .rent-btn { background: #22c55e; color: #23272f; }
 body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #16a34a; color: #fff; }
 >>>>>>> Stashed changes
+
+/* 08 ----------------------------------------------------------- */
+.animate-section {
+    opacity: 0;
+    transform: translateY(60px) scale(0.98);
+    transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.section-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    animation: slideUpIn 0.9s cubic-bezier(.4,0,.2,1), sectionGlow 1.2s;
+}
+
+@keyframes sectionGlow {
+    0% { box-shadow: 0 0 0px #3b82f6; }
+    60% { box-shadow: 0 0 24px #fbbf2444; }
+    100% { box-shadow: 0 0 0px #3b82f6; }
+}
+
+.gallery-animate {
+    opacity: 0;
+    transform: scale(0.92) translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+.gallery-visible {
+    opacity: 1;
+    transform: scale(1.08) translateY(0);
+    animation: galleryPop 0.7s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes galleryPop {
+    0% { transform: scale(0.92) translateY(30px);}    
+    60% { transform: scale(1.12) translateY(-6px);}    
+    100% { transform: scale(1.08) translateY(0);}    
+}
+
+.feedback-form.form-success {
+    animation: formPulse 0.7s;
+    border: 2px solid #16a34a;
+}
+
+@keyframes formPulse {
+    0% { box-shadow: 0 0 0 0 #16a34a33;}
+    70% { box-shadow: 0 0 12px 8px #16a34a33;}
+    100% { box-shadow: 0 0 0 0 #16a34a33;}
+}
+
+
+
 /* 09. Pricing Cards ----------------------------------------------------- */
 .price-card {
     border: 2px solid #e0e7ff;
