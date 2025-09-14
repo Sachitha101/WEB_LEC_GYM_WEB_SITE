@@ -1,120 +1,100 @@
-⚠️ Demo Notice This interface is a demonstration prototype.
-While it simulates account creation and login flows, no actual data is stored or transmitted. Authentication, logging, and backend services are not connected—form submissions are purely for UI testing purposes.A
+## ⚠️ Demo Notice
+This is a **UI prototype** for account management.  
+No real data is stored or transmitted. Backend services are **not connected**.
 
+---
 
-Account Access
-📌 Overview
-This interface provides two core functions for user account management:
-- Sign In – For existing users to log in using credentials or third‑party providers.
-- Create Account – For new users to register with required personal details.
-The design is split into two side‑by‑side panels for quick navigation and clarity.
+## 🔐 Account Access Overview
 
-🔑 Features
-Sign In Panel
-- Username or Email – Text input for registered account identifiers.
-- Password – Secure password input.
-- Third‑Party Authentication:
-- Continue with Google
-- Continue with Microsoft
-- Continue with Apple
-- Primary Action: Sign in button.
-Create Account Panel
-- Username – Unique identifier for the new account.
-- Password – Minimum 8 characters (validation enforced).
-- Age – Must be greater than 15.
-- Gender – Radio button selection: Male, Female, Other.
-- Educational Qualifications – Multiple selection via checkboxes:
-- O/L
-- A/L
-- Diploma
-- Degree
-- Postgraduate
-- Country – Dropdown list for country selection.
-- Primary Action: Create account button.
-🛠 Technical Notes
-- Form Validation:
-- Password length check (≥ 8 characters).
-- Age check (> 15).
-- Required fields: Username, Password, Age, Country.
-- Accessibility:
-- Labels associated with all inputs.
-- Keyboard navigation supported.
-- High‑contrast mode compatible.
-- Security:
-- Password fields masked.
-- HTTPS recommended for all data submissions.
-- Third‑party sign‑in uses OAuth 2.0.
-🚀 Usage
-- Clone or download the repository.
-- Open index.html in a browser or serve via a local dev server.
-- Configure backend endpoints for:
-- /login
-- /register
-- OAuth callback URLs for Google, Microsoft, Apple.
-- Test form validation and authentication flows.
+| Function         | Description                                                                 |
+|------------------|-----------------------------------------------------------------------------|
+| 🔑 Sign In        | Existing users log in via credentials or third-party providers              |
+| 🆕 Create Account | New users register with personal details                                    |
+| 🧭 Layout         | Split-panel design for quick navigation and clarity                         |
 
-📌 Future Enhancements
-- Add password strength meter.
-- Implement real‑time username availability check.
-- Enable multi‑language support.
-- Integrate reCAPTCHA for bot prevention.
+---
 
-🔍 Features Overview
-1. Home & Navigation
-Clean, responsive layout with intuitive navigation
+## 🧾 Sign In Panel
 
-Sectional highlights: About, Membership, Equipment, Tips, Shop, Feedback, and Contact
+| Field                     | Type                     |
+|---------------------------|--------------------------|
+| Username / Email          | Text input               |
+| Password                  | Secure input (masked)    |
+| Third-Party Auth          | Google / Microsoft / Apple |
+| ✅ Primary Action          | Sign In button           |
 
-2. Account System (Demo Only)
-Simulated login and registration flows
+---
 
-Multi-account access simulation: switch between mock user profiles
+## 📝 Create Account Panel
 
-Account overview panel: displays user role, membership status, and quick links
+| Field                     | Type / Validation                              |
+|---------------------------|------------------------------------------------|
+| Username                  | Unique identifier                              |
+| Password                  | ≥ 8 characters                                 |
+| Age                       | Must be > 15                                   |
+| Gender                    | Radio: Male / Female / Other                   |
+| Education                 | Checkboxes: O/L, A/L, Diploma, Degree, PG      |
+| Country                   | Dropdown list                                  |
+| ✅ Primary Action          | Create Account button                          |
 
-Adaptive greetings and visuals based on user context
+---
 
-3. Membership & Pricing
-Dynamic pricing cards with updated offers
+## 🛠 Technical Notes
 
-Visual breakdown of membership tiers and benefits
+- ✅ **Validation**: Password length, age check, required fields
+- ♿ **Accessibility**: Labels, keyboard nav, high-contrast mode
+- 🔒 **Security**: Masked passwords, OAuth 2.0, HTTPS recommended
 
-4. Trainer Booking
-Interactive booking form (non-functional)
+---
 
-Placeholder logic for trainer selection and time slot reservation
+## 🚀 Usage Instructions
 
-5. Shop Interface
-Cart icon and simulated product listing
+1. Clone/download repo  
+2. Open `index.html` locally or via dev server  
+3. Configure endpoints: `/login`, `/register`, OAuth callbacks  
+4. Test form validation and flows  
 
-UI-ready for future e-commerce integration
+---
 
-6. Feedback & Contact
-Form-based feedback submission (demo only)
+## 🌟 Future Enhancements
 
-Contact section with mock support email and live chat trigger
+| Feature                          | Status     |
+|----------------------------------|------------|
+| Password strength meter          | Planned    |
+| Real-time username check         | Planned    |
+| Multi-language support           | Planned    |
+| reCAPTCHA integration            | Planned    |
 
-7. Theme & Accessibility
-Light/Dark mode toggle (☀️ icon)
+---
 
-Scalable UI elements for accessibility testing
+## 🔍 UI Features Overview
 
-Justified text and adaptive iconography for visual balance
+| Section             | Highlights                                                                 |
+|---------------------|----------------------------------------------------------------------------|
+| 🏠 Home & Navigation | Responsive layout, About, Membership, Shop, Feedback, Contact              |
+| 👤 Account System    | Simulated login/register, mock profiles, adaptive visuals                  |
+| 💳 Membership        | Dynamic pricing cards, tier breakdown                                     |
+| 🏋️ Trainer Booking   | Placeholder booking form, trainer/time slot logic                         |
+| 🛒 Shop Interface     | Cart icon, product listing, e-commerce-ready UI                           |
+| 💬 Feedback & Contact| Form-based feedback, mock support email, live chat trigger                |
+| 🎨 Theme & Access     | Light/Dark toggle ☀️, scalable UI, adaptive icons                         |
 
-🧠 Tech Stack
-HTML5 / CSS3: Semantic structure and responsive styling
+---
 
-JavaScript (Vanilla): UI interactions and simulated logic
+## 🧠 Tech Stack
 
-Modular Design: Easily extendable components for real backend integration
+| Tech              | Purpose                                      |
+|-------------------|----------------------------------------------|
+| HTML5 / CSS3      | Semantic structure, responsive styling       |
+| JavaScript (Vanilla) | UI interactions, simulated logic         |
+| Modular Design    | Extendable components for backend integration|
 
-🔄 Future Enhancements (Suggested)
-Real authentication and session management
+---
 
-Role-based dashboards (Admin, Trainer, Member)
+## 🔄 Suggested Enhancements
 
-Integrated booking and payment systems
-
-Accessibility audit and WCAG compliance
-
-Backend API integration (Node.js / Firebase / ASP.NET)
+- 🔐 Real authentication & session management  
+- 🧑‍💼 Role-based dashboards (Admin, Trainer, Member)  
+- 💳 Integrated booking & payment systems  
+- ♿ Accessibility audit (WCAG compliance)  
+- 🔗 Backend API integration (Node.js / Firebase / ASP.NET)
