@@ -392,6 +392,17 @@ strong, b { color: #fbbf24; }
 
 .topcard:active { transform: scale(0.98); }
 .topcard .card-img { display: none !important; }
+
+/* 15. Support / Customer Sections -------------------------------------- */
+#copywriting { background: #e0e7ff; color: #23272f; text-align: center; margin-top: 32px; }
+body.dark-theme #copywriting { background: #1e293b; color: #f3f4f6; }
+#customer-support { background: #f8fafc; color: #23272f; text-align: center; margin-top: 32px; }
+body.dark-theme #customer-support { background: #1a202c; color: #f3f4f6; }
+#customer-support a { color: #3b82f6; }
+body.dark-theme #customer-support a { color: #60a5fa; }
+#support-chat-box { background: #f4f4f4; color: #23272f; border: 1px solid #cbd5e1; }
+body.dark-theme #support-chat-box { background: #23272f; color: #f3f4f6; border: 1px solid #64748b; }
+
 /* 16. Footer ------------------------------------------------------------- */
 footer { background: #f4f4f4; color: #23272f; text-align: center; padding: 24px 0 12px 0; border-radius: 16px 16px 0 0; margin-top: 32px; }
 footer a,
