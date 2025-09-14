@@ -425,3 +425,25 @@ body.dark-theme .site-footer a:focus { color: #3b82f6; }
 body.dark-theme .footer-support h2 { color: #fbbf24; }
 body.dark-theme #support-chat-box { background: #23272f; color: #f3f4f6; border: 1px solid #64748b; }
 body.dark-theme .footer-copy { color: #f3f4f6; }
+/* 24. Dividers & HR Styling --------------------------------------------- */
+hr, .divider { border: 0; height: 1px; background: linear-gradient(90deg, rgba(99,102,241,.25), rgba(59,130,246,.55), rgba(251,191,36,.45)); margin: 14px 0; display: block; }
+body.dark-theme hr,
+body.dark-theme .divider { background: linear-gradient(90deg, rgba(148,163,184,.25), rgba(96,165,250,.6), rgba(251,191,36,.6)); opacity: 0.95; }
+.content-section hr,
+.content-section .divider { margin: 16px 0; background: rgba(59,130,246,.35); }
+body.dark-theme .content-section hr,
+body.dark-theme .content-section .divider { background: rgba(96,165,250,.6); }
+@media (max-width: 800px) {
+    .navbar-links hr,
+    .navbar-links .divider { height: 1px; background: rgba(255,255,255,.14); margin: 10px 12px; }
+    body:not(.dark-theme) .navbar-links hr,
+    body:not(.dark-theme) .navbar-links .divider { background: rgba(0,0,0,.12); }
+    .navbar-links a,
+    .navbar-links button { padding: 16px 18px; line-height: 1.4; }
+}
+@media (max-width: 700px) {
+    .content-section p,
+    .content-section ul,
+    .content-section ol { margin: 10px 0 14px; }
+    .content-section li { margin: 6px 0; }
+}
