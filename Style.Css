@@ -220,6 +220,8 @@
     box-shadow: 0 6px 24px rgba(59,130,246,0.15);
 }
 
+<<<<<<< HEAD
+=======
 
 /*<!--12. Contact Info ---------------------------------------------- -->*/
 .shop-btn { font-size: 1em; font-weight: 600; border: none; border-radius: 8px; padding: 10px 22px; margin: 6px 8px 0 0; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(59,130,246,0.08); }
@@ -309,6 +311,10 @@ body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #
 .price-card ul { padding-left: 18px; margin: 10px 0 0 0; color: #444; font-size: 1em; }
 .price-card ul li { margin-bottom: 4px; }
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> d6079375e81be65ac4c542df19de433a2363137f
+>>>>>>> Stashed changes
 /* 10. Highlight / Top Cards --------------------------------------------- */
 .topcard {
     transition: 
@@ -330,6 +336,22 @@ body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #
     outline: none;
     z-index: 3;
 }
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+
+/*<!--12. Contact Info ---------------------------------------------- -->*/
+.shop-btn { font-size: 1em; font-weight: 600; border: none; border-radius: 8px; padding: 10px 22px; margin: 6px 8px 0 0; cursor: pointer; transition: background 0.2s, color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 8px rgba(59,130,246,0.08); }
+.add-btn { background: #3b82f6; color: #fff; }
+.add-btn:hover, .add-btn:focus { background: #2563eb; color: #fff; box-shadow: 0 4px 16px #3b82f6aa; }
+.rent-btn { background: #16a34a; color: #fff; }
+.rent-btn:hover, .rent-btn:focus { background: #059669; color: #fff; box-shadow: 0 4px 16px #16a34aaa; }
+body.dark-theme .add-btn { background: #60a5fa; color: #23272f; }
+body.dark-theme .add-btn:hover, body.dark-theme .add-btn:focus { background: #3b82f6; color: #fff; }
+body.dark-theme .rent-btn { background: #22c55e; color: #23272f; }
+body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #16a34a; color: #fff; }
+=======
+>>>>>>> Stashed changes
 /* 12. Tips & Feedback Cards --------------------------------------------- */
 .tips-cards-container, .feedback-cards-container {
     display: flex;
@@ -356,6 +378,10 @@ body.dark-theme .rent-btn:hover, body.dark-theme .rent-btn:focus { background: #
 body.dark-theme .tip-card, body.dark-theme .feedback-card { background: #23272f; color: #f3f4f6; box-shadow: 0 2px 12px rgba(30,41,59,0.18); }
 body.dark-theme .tip-card h3, body.dark-theme .feedback-card h3 { color: #60a5fa; }
 body.dark-theme .tip-card p, body.dark-theme .feedback-card p { color: #f3f4f6; }
+<<<<<<< Updated upstream
+=======
+>>>>>>> d6079375e81be65ac4c542df19de433a2363137f
+>>>>>>> Stashed changes
 
 /* 14. Semantic Color & Text Resets -------------------------------------- */
 body { color: #23272f; }
