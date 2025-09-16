@@ -1,1 +1,97 @@
-perpetrations 
+# Fitness Club (fitness_win11)
+
+Lightweight demo web app intended to run under XAMPP (Apache + PHP + MySQL) placed in `htdocs/fitness_win11`.
+
+Quick start
+- Ensure XAMPP is installed and Apache + MySQL are running.
+- Place this folder in your Apache `htdocs` (already in this workspace).
+- Import the SQL schema: open `sql/database.sql` in phpMyAdmin or run from mysql client to create the `fitness_db` database and tables.
+- Update DB credentials in `config/config.php` if your MySQL user/password differ (defaults to `root` with empty password on XAMPP).
+- Visit http://localhost/fitness_win11/login.php to access the login page.
+
+What I changed (quick changelog)
+- `includes/header.php`: Fixed stray commented output and replaced a broken emoji with a proper label. This prevents accidental comment text appearing in the page.
+- `assets/js/app.js`: Added defensive null checks around DOM access, switched several API calls to absolute paths (`/fitness_win11/api/...`), and improved error handling to avoid runtime exceptions when parts of the UI are missing.
+- `assets/js/login.js`: Reworked login flow to guard against missing elements, exposed a safe `window.__fitnessRunBoot()` function for the boot animation, and switched API calls to absolute paths and included credentials. Fixed provider & signup handlers to use the exposed animation function.
+- `api/feedback.php`: New endpoint that accepts JSON POSTs for feedback. Tries to insert into DB `feedback` table if available; otherwise appends to `data/feedback.log` as a fallback.
+
+Notes & verification
+- I ran PHP syntax checks (php -l) on modified files; no syntax errors were found.
+- Because this is a local XAMPP app, please run the app in your local environment and exercise the flows (signup, login, account update, feedback) to verify runtime behavior and DB connectivity.
+
+Home redesign (Sept 2025)
+- Reworked `index.html` with a modular 12-column layout (left hero, center widgets, right utilities).
+- New client-side features (demo-first, persisted to localStorage): rotating daily motivational quotes, environment-aware background, workout logging with toast feedback, class RSVP, emoji feedback, voice summary, font-size slider, and a simple sparkline for weekly calories.
+- All new UI hooks are in `index.html` (IDs: `motivationQuote`, `logSetBtn`, `completeWorkoutBtn`, `caloriesSparkline`, `fontScale`, `voiceSummaryBtn`, `emojiFeedback`, and RSVP buttons `rsvp-btn`).
+
+Next steps
+- Add server-side endpoints to persist workouts and class RSVPs per authenticated user (suggested files: `api/workout.php`, `api/rsvp.php`).
+- Run a WCAG contrast audit and refine color tokens for guaranteed compliance.
+- Replace emoji placeholders with an adaptive SVG icon set for consistent theming.
+
+Next recommended steps
+- (Optional) Add CSRF protection to forms and API endpoints.
+- (Optional) Create `feedback` DB table (if you want feedback to be stored in DB). Example:
+
+  CREATE TABLE feedback (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    feedback TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
+- (Optional) Run a JavaScript linter (ESLint) and fix any stylistic issues.
+
+If you'd like, I can also:
+- Add a simple PHPUnit or JS test harness for key flows.
+- Create missing DB tables or update `sql/database.sql` to include `feedback` and `oauth_providers` tables.
+Fitness Club - Windows 11 styled frontend and PHP backend
+
+Project Roles (for voting and assignment)
+1. Frontend Developer (HTML/CSS/JS)   - UI, accessibility, client-side logic
+2. Backend Developer (PHP)            - Server logic, APIs
+3. Database Manager                   - Schema, migrations, optimization
+4. Authentication & Security Lead     - Auth flows, sessions, OAuth
+5. API Integration Specialist         - API endpoints, client integration
+6. DevOps & Deployment                - Hosting, CI/CD, deployments
+7. Testing & Quality Assurance        - Tests and QA validation
+8. Documentation & Support            - Docs, README, user support
+9. UI/UX Designer                     - Wireframes, consistency, visuals
+10. Project Manager                   - Coordination, release planning
+
+Voting guidance: each member should nominate up to 2 roles they feel best fit. Run a ranked voting (1-5) per role and assign owners ensuring every member has at least two roles assigned.
+
+Quick start
+1. Copy this folder into your XAMPP htdocs: `f:\XAMMP\htdocs\fitness_win11`
+2. Import the SQL in `sql/database.sql` into MySQL (phpMyAdmin or CLI).
+3. Ensure `config/config.php` DB constants match your environment.
+4. Start Apache & MySQL in XAMPP and open `http://localhost/fitness_win11/`.
+
+Files of interest
+- `index.html` - Windows 11-styled UI
+- `assets/styles.css` - styles
+- `assets/js/app.js` - UI and fetch calls to auth API
+- `api/auth.php` - sign up / login / logout endpoints
+- `config/config.php` - PDO DB connection and helpers
+- `sql/database.sql` - database creation script
+
+Notes & next steps
+- This is a simulated starter project. For production use, enable HTTPS and implement OAuth flows.
+- Add server-side input validation and stricter session handling.
+
+
+
+How to run locally (quick)
+
+1. Start the XAMPP Control Panel and ensure Apache (and MySQL if you need the DB) are running.
+2. Visit the site in your browser: `http://localhost/fitness_win11/` (or `login.php` directly).
+3. If you imported the SQL schema, ensure `config/config.php` has the correct DB credentials.
+
+Smoke-test checklist
+
+- Click main nav items to switch sections (Home, Membership, Booking, Shop, PowerZone, Feedback, Account).
+- On small screens, click the hamburger menu (☰). It should open, close on item click, outside click, and Escape.
+- Submit the Feedback form and verify a success or error message appears.
+- If signed in, update account details and/or upload an avatar; confirm the AJAX success message.
+
+If you want automated smoke tests (headless), reply "add automated tests" and I'll scaffold a minimal script.
