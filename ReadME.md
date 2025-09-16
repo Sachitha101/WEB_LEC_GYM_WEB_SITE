@@ -98,3 +98,22 @@ No real data is stored or transmitted. Backend services are **not connected**.
 - 💳 Integrated booking & payment systems  
 - ♿ Accessibility audit (WCAG compliance)  
 - 🔗 Backend API integration (Node.js / Firebase / ASP.NET)
+
+
+
+• Project overview, files of interest, and role notes 
+
+Files of interest - assets/js/app.js — UI and fetch calls to auth API - api/auth.php — sign up / login / logout endpoints - config/config.php — PDO DB connection and helpers - sql/database.sql — database creation script 
+
+Project Roles (for voting and assignment) 
+1. Frontend Developer (HTML/CSS/JS)   - UI, accessibility, client-side logic 
+2. Backend Developer (PHP)            
+3. Database Manager                   - Server logic, APIs - Schema, migrations, optimization 
+4. Authentication & Security Lead     - Auth flows, sessions, OAuth 
+5. API Integration Specialist         - API endpoints, client integration
+6. DevOps & Deployment                - Hosting, CI/CD, deployments
+7. Testing & Quality Assurance        - Tests and QA validation
+8. Documentation & Support            - Docs, README, user support
+9. UI/UX Designer                     - Wireframes, consistency, visuals
+10. Project Manager                   - Coordination, release planning
+
