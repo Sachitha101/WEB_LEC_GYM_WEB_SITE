@@ -1,20 +1,25 @@
 <?php
-<?php
 /*
-Database module (extracted)
-Roles: Database Manager, Backend Developer
-Voting note: DB Manager owns this module; config/config.php will include it.
+Project Roles (Vote to assign):
+1. Database Manager
+2. Backend Developer (PHP)
+3. DevOps & Deployment
+4. Security & Authentication Lead
+5. Documentation & Support
+
+This configuration contains DB credentials and helper functions. Owner: DB Manager + Backend.
+Voting note: changes to DB constants require DevOps/DB approval and should be reviewed before deployment.
 */
+// Database configuration using PDO
+// Update these constants for your local environment
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'fitness_db');
+define('DB_USER', 'root');
+define('DB_PASS', ''); // XAMPP default is empty password
 
-if (!defined('DB_HOST')) {
-    // Default values for local XAMPP dev — change to match your environment
-    define('DB_HOST', '127.0.0.1');
-    define('DB_NAME', 'fitness_db');
-    define('DB_USER', 'root');
-    define('DB_PASS', ''); // XAMPP default is empty password
-}
+date_default_timezone_set('UTC');
 
-// Create and return a PDO connection (singleton)
+// Create a PDO connection and return it
 function connectDB() {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
@@ -28,8 +33,26 @@ function connectDB() {
         ]);
         return $pdo;
     } catch (PDOException $e) {
-        // Log for developers, return null so callers can handle the error gracefully
         error_log('DB connection failed: ' . $e->getMessage());
         return null;
     }
+}
+
+// Simple input sanitizer
+function sanitizeInput($v) {
+    return trim(htmlspecialchars($v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
+}
+
+// CSRF token helpers
+function generate_csrf_token() {
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function validate_csrf_token($token) {
+    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
 }
