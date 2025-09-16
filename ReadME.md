@@ -1,100 +1,177 @@
-## ⚠️ Demo Notice
-This is a **UI prototype** for account management.  
-No real data is stored or transmitted. Backend services are **not connected**.
+# Fitness Club — Windows 11–inspired web app ✨
+
+Glassmorphism UI, smooth motion, and rounded corners—built with PHP, MySQL, and vanilla JS. Clean, modular, and ready to run on XAMPP.
+
+> A modern fitness club experience with memberships, booking, shop/cart, feedback, and account management—all with Windows 11 vibes.
 
 ---
 
-## 🔐 Account Access Overview
+## 🚀 Overview
 
-| Function         | Description                                                                 |
-|------------------|-----------------------------------------------------------------------------|
-| 🔑 Sign In        | Existing users log in via credentials or third-party providers              |
-| 🆕 Create Account | New users register with personal details                                    |
-| 🧭 Layout         | Split-panel design for quick navigation and clarity                         |
+- **Win11 aesthetics:** Mica/glass, soft shadows, rounded corners, subtle motion, and accessible contrast.
+- **Modular PHP:** Reusable header/footer, includes, and session-based user state.
+- **REST-like PHP endpoints:** Auth, account, feedback (simple and extendable).
+- **Quick DB bootstrap:** MySQL schema and helper scripts for fast local setup.
 
----
-
-## 🧾 Sign In Panel
-
-| Field                     | Type                     |
-|---------------------------|--------------------------|
-| Username / Email          | Text input               |
-| Password                  | Secure input (masked)    |
-| Third-Party Auth          | Google / Microsoft / Apple |
-| ✅ Primary Action          | Sign In button           |
+> Tip: PHP 8.x on XAMPP is recommended for best performance and compatibility.
 
 ---
 
-## 📝 Create Account Panel
+## 🧭 Features at a glance
 
-| Field                     | Type / Validation                              |
-|---------------------------|------------------------------------------------|
-| Username                  | Unique identifier                              |
-| Password                  | ≥ 8 characters                                 |
-| Age                       | Must be > 15                                   |
-| Gender                    | Radio: Male / Female / Other                   |
-| Education                 | Checkboxes: O/L, A/L, Diploma, Degree, PG      |
-| Country                   | Dropdown list                                  |
-| ✅ Primary Action          | Create Account button                          |
+| Area | Highlights | Status |
+|---|---|---|
+| 🏠 Home dashboard | Hero section, quick actions, progress metrics | Ready |
+| 🏢 Franchise | Interactive investment calculator, timeline, testimonials | Ready |
+| 📰 News | Category tabs, featured carousel, masonry cards | Ready |
+| 💳 Membership | Tiered plans, feature lists, FAQs | Ready |
+| 📅 Booking | Class and personal trainer reservations | Ready |
+| 🛒 Shop | Product cards, category chips, cart widget, checkout modal | Ready |
+| 🖼️ PowerZone gallery | Lazy-loaded grid + enhanced lightbox | Ready |
+| 💬 Feedback | Inline form + modal with sentiment selection | Ready |
+| 🔐 Auth & account | Login, create account, session-aware area | Ready |
 
----
-
-## 🛠 Technical Notes
-
-- ✅ **Validation**: Password length, age check, required fields
-- ♿ **Accessibility**: Labels, keyboard nav, high-contrast mode
-- 🔒 **Security**: Masked passwords, OAuth 2.0, HTTPS recommended
+> Sources: modular pages with clean URLs and simple JavaScript controllers.
 
 ---
 
-## 🚀 Usage Instructions
+## 🧰 Tech stack
 
-1. Clone/download repo  
-2. Open `index.html` locally or via dev server  
-3. Configure endpoints: `/login`, `/register`, OAuth callbacks  
-4. Test form validation and flows  
-
----
-
-## 🌟 Future Enhancements
-
-| Feature                          | Status     |
-|----------------------------------|------------|
-| Password strength meter          | Planned    |
-| Real-time username check         | Planned    |
-| Multi-language support           | Planned    |
-| reCAPTCHA integration            | Planned    |
+| Layer | Tools | Notes |
+|---|---|---|
+| Frontend | HTML5, CSS3, Vanilla JS | Glassmorphism/Mica components, responsive layout, ARIA |
+| Backend | PHP (XAMPP/Apache) | Sessions, includes, REST-like routes |
+| Database | MySQL/MariaDB | Schema in `sql/database.sql` |
+| Local dev | XAMPP on Windows | Apache + MySQL |
 
 ---
 
-## 🔍 UI Features Overview
+## 📦 Project structure
 
-| Section             | Highlights                                                                 |
-|---------------------|----------------------------------------------------------------------------|
-| 🏠 Home & Navigation | Responsive layout, About, Membership, Shop, Feedback, Contact              |
-| 👤 Account System    | Simulated login/register, mock profiles, adaptive visuals                  |
-| 💳 Membership        | Dynamic pricing cards, tier breakdown                                     |
-| 🏋️ Trainer Booking   | Placeholder booking form, trainer/time slot logic                         |
-| 🛒 Shop Interface     | Cart icon, product listing, e-commerce-ready UI                           |
-| 💬 Feedback & Contact| Form-based feedback, mock support email, live chat trigger                |
-| 🎨 Theme & Access     | Light/Dark toggle ☀️, scalable UI, adaptive icons                         |
+```text
+/
+├─ api/
+│  ├─ auth.php
+│  ├─ account.php
+│  └─ feedback.php
+├─ assets/
+│  ├─ css/               # Glass/mica styles, tokens, utilities
+│  ├─ js/
+│  │  ├─ app.js          # Global UI, theming, nav, dialogs
+│  │  ├─ cart.js         # Cart state & checkout modal
+│  │  ├─ create_account.js
+│  │  └─ login.js
+│  └─ images/
+├─ includes/
+│  ├─ init.php           # Sessions, config, helpers
+│  ├─ header.php         # App bar, nav, theme toggle
+│  └─ footer.php         # Footer, modals, scripts
+├─ sql/
+│  └─ database.sql       # Tables, seed data
+├─ index.php             # Home dashboard
+├─ membership.php
+├─ booking.php
+├─ shop.php
+├─ gallery.php
+├─ feedback.php
+├─ login.php
+└─ create_account.php
+```
+
+> Keep UI pieces atomic: cards, chips, pills, command bars, and modal sheets for consistency.
 
 ---
 
-## 🧠 Tech Stack
+## ⚙️ Setup and usage
 
-| Tech              | Purpose                                      |
-|-------------------|----------------------------------------------|
-| HTML5 / CSS3      | Semantic structure, responsive styling       |
-| JavaScript (Vanilla) | UI interactions, simulated logic         |
-| Modular Design    | Extendable components for backend integration|
+1. **Clone**
+   - git clone https://github.com/your-username/fitness-club.git
+   - Place in XAMPP htdocs (e.g., C:/xampp/htdocs/fitness-club)
+
+2. **Start services**
+   - Start Apache and MySQL from XAMPP Control Panel
+
+3. **Create database**
+   - Open phpMyAdmin → Create DB (e.g., fitness_club)
+   - Import sql/database.sql
+
+4. **Configure**
+   - Update DB creds in includes/init.php if needed
+   - Ensure PHP 8.x is enabled in XAMPP
+
+5. **Run**
+   - Visit http://localhost/fitness-club
+
+> Optional: Add a virtual host for cleaner URLs and cookie isolation.
 
 ---
 
-## 🔄 Suggested Enhancements
+## 🔌 API routes (REST-like, simple)
 
-- 🔐 Real authentication & session management  
-- 🧑‍💼 Role-based dashboards (Admin, Trainer, Member)  
-- 💳 Integrated booking & payment systems  
-- ♿ Accessibility audit (WCAG compliance)  
-- 🔗 Backend API integration (Node.js / Firebase / ASP.NET)
+| Route | Method | Purpose |
+|---|---|---|
+| /api/auth.php | POST | Login/Logout |
+| /api/account.php | GET/POST | Fetch/update account profile |
+| /api/feedback.php | POST | Submit feedback with sentiment |
+| /api/oauth.php | GET | Placeholder for OAuth flows |
+
+> Responses use JSON; PHP sessions track auth state. Extend with JWT or real OAuth when you wire a production backend.
+
+---
+
+## 🗄️ Database highlights
+
+- **users:** id, name, email, password_hash, role, created_at
+- **memberships:** plan tiers, pricing, features
+- **classes/trainers:** scheduling metadata for booking
+- **products/orders/cart_items:** shop & checkout flow
+- **feedback:** message, rating/sentiment, timestamps
+
+> Import sql/database.sql to bootstrap tables and optional sample data.
+
+---
+
+## 🖌️ UI/UX notes (Windows 11 feel)
+
+- **Glass/Mica:** Backdrop blur with layered opacities, subtle noise, and elevation tokens.
+- **Motion:** Micro-animations on hover/press; smooth sheet and modal transitions.
+- **Rounded geometry:** 8–12px radii, pill-shaped chips, soft shadows.
+- **Accessibility:** ARIA landmarks, focus states, color contrast, reduced motion support.
+- **Theming:** Light/Dark toggle with CSS custom properties; iconography adapts to theme.
+
+---
+
+## 🗺️ Roadmap
+
+- **Auth:** Password strength meter, reCAPTCHA, email verification
+- **Booking:** Trainer availability logic, calendar sync
+- **Shop:** Payment gateway integration, order history
+- **Accessibility:** WCAG audit, keyboard shortcuts, high-contrast pass
+- **Localization:** Multi-language strings and RTL support
+- **Admin views:** Role-based dashboards (Admin, Trainer, Member)
+
+---
+
+## 🤝 Contributing
+
+- **Style:** Keep components atomic and accessible.
+- **Commits:** Clear, scoped messages (feat:, fix:, ui:, docs:).
+- **PRs:** Include screenshots for UI changes and short test notes.
+
+---
+
+## 📄 License
+
+This project is open-source under the Unlicense. Free to use, modify, and distribute.
+
+---
+
+## 📷 Screenshots
+
+- Home dashboard (glass, hero, quick actions)
+- Membership tiers (cards, FAQs)
+- Shop & cart (chips, modal checkout)
+- Booking (class/trainer flows)
+- Feedback (inline + modal)
+
+Add images under assets/images and reference them here.
