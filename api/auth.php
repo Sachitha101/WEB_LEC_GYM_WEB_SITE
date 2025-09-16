@@ -146,3 +146,69 @@ async function signInWithProvider(provider, opts={}){
   if (res?.success) setTimeout(()=>{ window.location.href = 'index.php'; }, 200);
 }
 
+
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+header('Content-Type: application/json');
+require_once __DIR__ . '/../config/config.php';
+
+function jsonResponse($success, $message, $data = null) {
+    echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
+    exit;
+}
+
+// Handle signup
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_GET['action'] ?? '') === 'signup') {
+    $input = json_decode(file_get_contents('php://input'), true) ?? [];
+
+    // (CSRF checks removed for demo/basic PHP simplicity)
+
+    $name = sanitizeInput($input['name'] ?? '');
+    $email = sanitizeInput($input['email'] ?? '');
+    $password = $input['password'] ?? '';
+    $age = (int)($input['age'] ?? 0);
+    $gender = sanitizeInput($input['gender'] ?? null);
+    $education = $input['education'] ?? null; // expect array or null
+    $country = sanitizeInput($input['country'] ?? null);
+
+    if (empty($name) || empty($email) || empty($password)) {
+        jsonResponse(false, 'All fields are required');
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        jsonResponse(false, 'Invalid email');
+    }
+    if (strlen($password) < 8) {
+        jsonResponse(false, 'Password must be at least 8 characters');
+    }
+    if ($age <= 15) {
+        jsonResponse(false, 'You must be older than 15');
+    }
+
+    $pdo = connectDB();
+    if (!$pdo) jsonResponse(false, 'Database connection error');
+
+    // Check existing
+    $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) jsonResponse(false, 'Email already registered');
+
+    $hashed = password_hash($password, PASSWORD_DEFAULT);
+    // store education as JSON if provided
+    $educationJson = null;
+    if (is_array($education)) {
+        $educationJson = json_encode(array_values($education));
+    } elseif (!empty($education)) {
+        // single value
+        $educationJson = json_encode([$education]);
+    }
+
+    $stmt = $pdo->prepare('INSERT INTO users (name, email, password, age, gender, education, country, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())');
+    $ok = $stmt->execute([$name, $email, $hashed, $age, $gender, $educationJson, $country]);
+    if ($ok) {
+        jsonResponse(true, 'Registration successful');
+    }
+    jsonResponse(false, 'Registration failed');
+}
+
+
