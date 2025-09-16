@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Create Account — Fitness Club</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <!-- Header with icon-first nav to match site pattern -->
+  <header class="fluent-navbar" role="banner">
+    <div class="navbar-container">
+      <button class="hamburger-btn" id="hamburgerToggle" aria-label="Toggle navigation menu" aria-expanded="false"></button>
+      <div class="brand-section"><div class="brand-logo"></div><span class="brand-text">Fitness Club</span></div>
+      <nav class="desktop-nav" id="desktopNav" role="navigation" aria-label="Main navigation">
+        <a href="index.html#home" class="nav-item" data-section="home" aria-label="Home">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-home"></use></svg>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="index.html#membership" class="nav-item" data-section="membership" aria-label="Membership">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-membership"></use></svg>
+          <span class="nav-label">Membership</span>
+        </a>
+        <a href="index.html#booking" class="nav-item" data-section="booking" aria-label="Booking">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-calendar"></use></svg>
+          <span class="nav-label">Booking</span>
+        </a>
+        <a href="index.html#shop" class="nav-item" data-section="shop" aria-label="Shop">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-shop"></use></svg>
+          <span class="nav-label">Shop</span>
+        </a>
+        <a href="index.html#powerzone" class="nav-item" data-section="powerzone" aria-label="PowerZone">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-powerzone"></use></svg>
+          <span class="nav-label">PowerZone</span>
+        </a>
+        <a href="index.html#news" class="nav-item" data-section="news" aria-label="News">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-news"></use></svg>
+          <span class="nav-label">News</span>
+        </a>
+        <a href="index.html#feedback" class="nav-item" data-section="feedback" aria-label="Feedback">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-feedback"></use></svg>
+          <span class="nav-label">Feedback</span>
+        </a>
+        <a href="index.html#account" class="nav-item" data-section="account" aria-label="Account">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-user"></use></svg>
+          <span class="nav-label">Account</span>
+        </a>
+      </nav>
+      <div class="navbar-right"><div class="digital-clock" id="digitalClock" aria-live="polite"><span class="clock-time">--:--:--</span> <span class="clock-date">Loading...</span></div></div>
+      <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <div class="page-bg">
+    <div class="card-shell" role="region" aria-labelledby="create-heading">
+      <div class="split">
+        <div class="col">
+          <div style="text-align:center; margin-bottom: 1.5rem;">
+            <div aria-hidden="true" style="font-size:3.2rem; margin-bottom:.75rem; filter: drop-shadow(0 4px 8px rgba(0,194,255,0.3)); animation: float 3s ease-in-out infinite;">🔐</div>
+            <h2 id="create-heading" class="title-gradient" style="font-size:2.2rem; font-weight:800;">Create your account</h2>
+            <p class="muted">Join Fitness Club to save progress, book classes, and more.</p>
+          </div>
+
+            <form id="signupForm" style="display:flex; flex-direction:column; gap:1rem; max-width: 460px; margin: 0 auto;">
+            <div class="form-group">
+              <label for="su_name" class="form-label">Full name</label>
+              <input id="su_name" name="su_name" type="text" required minlength="2" class="form-input" placeholder="Enter your full name" />
+            </div>
+            <div class="form-group">
+              <label for="su_email" class="form-label">Email</label>
+              <input id="su_email" name="su_email" type="email" required class="form-input" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="su_password" class="form-label">Password</label>
+              <input id="su_password" name="su_password" type="password" required minlength="8" class="form-input" placeholder="Create a strong password" />
+            </div>
+            <div style="display:flex; gap: .75rem; align-items:center;">
+              <button class="primary" type="submit">Create Account</button>
+              <a href="login.html" class="ghost" style="text-decoration:none; padding:.9rem 1.1rem; border-radius:12px;">Back to Sign In</a>
+            </div>
+            <div id="signupMsg" role="status" aria-live="polite" style="margin-top: 1rem; text-align: center;"></div>
+          </form>
+        </div>
+        <div class="sep"></div>
+        <div class="col" style="background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));">
+          <h3 class="title-gradient" style="font-size:1.6rem; font-weight:800; margin-bottom: .5rem;">Why join?</h3>
+          <ul class="muted" style="line-height:1.9;">
+            <li>Book classes in one click</li>
+            <li>Track workouts and progress</li>
+            <li>Personalized recommendations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/api-shim.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/create_account.js"></script>
+</body>
+</html>

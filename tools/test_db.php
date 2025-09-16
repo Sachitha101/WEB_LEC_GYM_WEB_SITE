@@ -1,10 +1,9 @@
-Minimal DB connectivity test
-
 <?php
 require_once __DIR__ . '/../config/config.php';
 $pdo = connectDB();
 if ($pdo) {
     echo "OK: Connected to database\n";
+    // show one sample query
     try {
         $stmt = $pdo->query("SHOW TABLES LIKE 'users'");
         $res = $stmt->fetchAll();

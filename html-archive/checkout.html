@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — Fitness Club</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .checkout-shell{ min-height:100vh; display:flex; align-items:center; justify-content:center; background: linear-gradient(180deg, rgba(4,10,16,0.70), rgba(3,8,14,0.72)); padding: 24px; }
+    .pay-card{ width: min(520px, 92vw); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); border:1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-radius: 16px; padding: 22px; color: var(--fluent-text-primary); box-shadow: 0 18px 60px rgba(2,6,23,0.36); }
+    .pay-header{ display:flex; align-items:center; justify-content:space-between; margin-bottom: 14px; }
+    .visa-logo{ width:64px; height:auto; opacity:0.9 }
+    .pay-grid{ display:grid; grid-template-columns: 1fr; gap:12px }
+    .pay-row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+    .pay-input{ background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 12px; color: var(--fluent-text-primary); }
+    .pay-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top: 10px; }
+    .status{ margin-top: 10px; min-height: 24px; color: var(--muted) }
+  </style>
+</head>
+<body class="dark">
+  <div class="checkout-shell">
+    <div class="pay-card glass-card">
+      <div class="pay-header">
+        <h2 style="margin:0;">Payment</h2>
+        <svg class="visa-logo" viewBox="0 0 64 24" xmlns="http://www.w3.org/2000/svg" aria-label="VISA">
+          <path fill="#1a73e8" d="M25.7 23.4h-4.2l2.6-15.8h4.2l-2.6 15.8zm-7.2-15.8l-4 11.1-.5-2.8h-6.8l-.9 2.6h-4.4l6.4-15.9h4.5l-2.8 7.1h4.5l2-7.1h4.1zm33.6 0h-3.5c-1.1 0-2 .3-2.5 1.5l-6.7 14.3h4.6l1-2.6h5.6l.6 2.6h4.1l-3.2-15.8zm-5.3 9.3l2.3-5.9 1.3 5.9h-3.6zM62.7 7.7c-.9-.4-2.3-.9-4.1-.9-4.5 0-7.6 2.4-7.6 5.8 0 2.5 2.2 3.9 3.8 4.8 1.7.9 2.3 1.5 2.3 2.3 0 1.2-1.4 1.8-2.8 1.8-1.9 0-2.9-.3-4.4-1.1l-.6-.3-.7 4.1c1.1.5 3.1 1 5.1 1 4.8 0 7.9-2.4 7.9-6 0-2-1.2-3.6-3.6-4.8-1.5-.8-2.4-1.3-2.4-2.3 0-.8.8-1.6 2.6-1.6 1.5 0 2.4.3 3.1.7l.4.2.6-3.9z"/>
+        </svg>
+      </div>
+      <form id="payForm">
+        <div class="pay-grid">
+          <label>
+            <div>Cardholder name</div>
+            <input id="cardName" class="pay-input" type="text" value="Demo User" required />
+          </label>
+          <label>
+            <div>Card number</div>
+            <input id="cardNumber" class="pay-input" type="text" inputmode="numeric" value="4111 1111 1111 1111" required />
+          </label>
+          <div class="pay-row">
+            <label>
+              <div>Expiry</div>
+              <input id="cardExpiry" class="pay-input" type="text" value="12/30" required />
+            </label>
+            <label>
+              <div>CVV</div>
+              <input id="cardCVV" class="pay-input" type="password" value="123" required />
+            </label>
+          </div>
+        </div>
+        <div class="pay-actions">
+          <button type="submit" class="primary" id="payNow">Pay Now</button>
+        </div>
+        <div id="payStatus" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+  <script>
+    (function(){
+      const status = document.getElementById('payStatus');
+      const form = document.getElementById('payForm');
+      function step(msg, delay=700){
+        return new Promise(res => { status.textContent = msg; setTimeout(res, delay); });
+      }
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('payNow');
+        btn.disabled = true;
+        await step('Processing transaction...', 900);
+        await step('Verifying card...', 900);
+        await step('Payment successful ✔', 800);
+        setTimeout(() => { window.location.href = 'index.html'; }, 900);
+      });
+    })();
+  </script>
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout — Fitness Club</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="fluent-navbar" role="banner">
+    <div class="navbar-container">
+      <div class="brand-section"><span class="brand-text">Fitness Club</span></div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 2rem 1rem;">
+    <h1 style="margin-bottom:1rem;">Checkout (Static Demo)</h1>
+    <p class="muted" style="margin-bottom:1.5rem;">This is a static demo. No real payment is processed. Your items are stored in your browser only.</p>
+
+    <section id="orderSummary" class="glass-card" style="padding:1rem; margin-bottom:1rem;">
+      <h2 style="margin-bottom:.75rem;">Order Summary</h2>
+      <div id="orderItems"></div>
+      <div style="display:flex; justify-content:space-between; margin-top:1rem;">
+        <strong>Total</strong>
+        <strong id="orderTotal">$0</strong>
+      </div>
+    </section>
+
+    <section class="glass-card" style="padding:1rem;">
+      <h2 style="margin-bottom:.75rem;">Payment</h2>
+      <p class="muted">In static mode, click “Place Order” to simulate a successful checkout.</p>
+      <button id="placeOrder" class="primary" style="margin-top:1rem;">Place Order</button>
+      <div id="status" role="status" style="margin-top:1rem;"></div>
+    </section>
+  </main>
+
+  <script src="assets/js/checkout.js"></script>
+</body>
+</html>

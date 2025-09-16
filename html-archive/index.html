@@ -1,0 +1,1745 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitness Club — Premium Gym</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <meta name="description" content="Fitness Club — membership, trainer booking, shop, and feedback. Windows 11 inspired UI." />
+
+  <!-- Include SVG icons -->
+  <object type="image/svg+xml" data="assets/icons.svg" style="display: none;" aria-hidden="true"></object>
+
+  <!-- Load dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/idb@7/build/umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
+
+  <!-- Load our modules -->
+  <script type="module" src="assets/js/db.js"></script>
+  <script type="module" src="assets/js/api-shim.js"></script>
+  <script type="module" src="assets/js/feedback.js"></script>
+</head>
+<body>
+  <div class="win11-shell mica-shell" role="application" aria-label="Fitness Club main shell">
+    <!-- Modern Fluent Design Navbar -->
+    <header class="fluent-navbar" role="banner">
+      <div class="navbar-container">
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-btn" id="hamburgerToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- Brand Section -->
+        <div class="brand-section">
+          <div class="brand-logo">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-dumbbell"></use>
+            </svg>
+          </div>
+          <span class="brand-text">Fitness Club</span>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav" id="desktopNav" role="navigation" aria-label="Main navigation">
+          <a href="#home" class="nav-item" data-section="home" aria-label="Home">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-home"></use>
+            </svg>
+            <span class="nav-label">Home</span>
+          </a>
+
+          <a href="#membership" class="nav-item" data-section="membership" aria-label="Membership">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-membership"></use>
+            </svg>
+            <span class="nav-label">Membership</span>
+          </a>
+
+          <a href="#booking" class="nav-item" data-section="booking" aria-label="Booking">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span class="nav-label">Booking</span>
+          </a>
+
+          <a href="#shop" class="nav-item" data-section="shop" aria-label="Shop">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-shop"></use>
+            </svg>
+            <span class="nav-label">Shop</span>
+          </a>
+
+          <a href="#powerzone" class="nav-item" data-section="powerzone" aria-label="PowerZone">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-powerzone"></use>
+            </svg>
+            <span class="nav-label">PowerZone</span>
+          </a>
+
+          <a href="#news" class="nav-item" data-section="news" aria-label="News">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-news"></use>
+            </svg>
+            <span class="nav-label">News</span>
+          </a>
+
+          <a href="#franchise" class="nav-item" data-section="franchise" aria-label="Franchise">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-franchise"></use>
+            </svg>
+            <span class="nav-label">Franchise</span>
+          </a>
+
+          <a href="#feedback" class="nav-item" data-section="feedback" aria-label="Feedback">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-feedback"></use>
+            </svg>
+            <span class="nav-label">Feedback</span>
+          </a>
+
+          <a href="#account" class="nav-item" data-section="account" aria-label="Account">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <use href="#icon-user"></use>
+            </svg>
+            <span class="nav-label">Account</span>
+          </a>
+        </nav>
+
+        <!-- Right Section -->
+        <div class="navbar-right">
+          <!-- Digital Clock -->
+          <div class="digital-clock" id="digitalClock" aria-live="polite">
+            <span class="clock-time">--:--:--</span>
+            <span class="clock-date">Loading...</span>
+          </div>
+
+          <!-- Theme Toggle -->
+          <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle theme">
+            <svg class="theme-icon light-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg class="theme-icon dark-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+            </svg>
+          </button>
+
+          <!-- Notifications -->
+          <button class="notification-btn" id="notificationBtn" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+            <svg class="notification-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 01-3.46 0"/>
+            </svg>
+            <span class="notification-badge" id="notificationBadge" aria-hidden="true">0</span>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation Overlay -->
+        <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
+          <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+            <a href="#home" class="mobile-nav-item" data-section="home">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <use href="#icon-home"></use>
+              </svg>
+              <span>Home</span>
+            </a>
+
+            <a href="#membership" class="mobile-nav-item" data-section="membership">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <use href="#icon-membership"></use>
+              </svg>
+              <span>Membership</span>
+            </a>
+
+            <a href="#booking" class="mobile-nav-item" data-section="booking">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              <span>Booking</span>
+            </a>
+
+            <a href="#shop" class="mobile-nav-item" data-section="shop">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <use href="#icon-shop"></use>
+              </svg>
+              <span>Shop</span>
+            </a>
+
+            <a href="#powerzone" class="mobile-nav-item" data-section="powerzone">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+              </svg>
+              <span>PowerZone</span>
+            </a>
+
+            <a href="#news" class="mobile-nav-item" data-section="news">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h.01M16 20h.01M8 9h8m-8 4h8m-8 4h4"/>
+                <rect x="4" y="2" width="16" height="20" rx="2"/>
+              </svg>
+              <span>News</span>
+            </a>
+
+            <a href="#franchise" class="mobile-nav-item" data-section="franchise">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+              <span>Franchise</span>
+            </a>
+
+            <a href="#feedback" class="mobile-nav-item" data-section="feedback">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <use href="#icon-feedback"></use>
+              </svg>
+              <span>Feedback</span>
+            </a>
+
+            <a href="#account" class="mobile-nav-item" data-section="account">
+              <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <use href="#icon-user"></use>
+              </svg>
+              <span>Account</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main class="right-panel" style="flex:1;">
+      <!-- HOME -->
+      <section id="home" class="section hero active" aria-label="Home Dashboard" tabindex="0">
+        <!-- Modern Hero Section -->
+        <div class="hero-modern glass-card heroSlideIn" style="background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; padding: 3rem; margin-bottom: 3rem; position: relative; overflow: hidden;">
+          <!-- Animated Background Elements -->
+          <div class="hero-bg-element" style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(0,194,255,0.1) 0%, transparent 70%); border-radius: 50%; animation: float 6s ease-in-out infinite;"></div>
+          <div class="hero-bg-element" style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(34,197,94,0.1) 0%, transparent 70%); border-radius: 50%; animation: float 8s ease-in-out infinite reverse;"></div>
+
+          <div class="hero-content-modern" style="display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center; position: relative; z-index: 2;">
+            <!-- Main Content -->
+            <div class="hero-text">
+              <div class="hero-greeting" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="hero-emoji-large" id="heroEmoji" aria-hidden="true" style="font-size: 4rem; animation: bounce 2s ease-in-out infinite;">💪</div>
+                <div>
+                  <h1 class="hero-title-modern" id="greetingTitle" style="font-size: 3.5rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1;">Welcome Back!</h1>
+                  <p class="hero-subtitle" id="greetingSub" style="color: var(--fluent-text-secondary); font-size: 1.2rem; margin: 0.5rem 0 0; font-weight: 500;">Ready to crush your fitness goals today?</p>
+                </div>
+              </div>
+
+              <!-- Quick Stats Row -->
+              <div class="hero-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                <div class="stat-card glass-card cardBounce" style="background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.5rem; text-align: center;">
+                  <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 0.5rem;">4</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.9rem; font-weight: 600;">Workouts This Week</div>
+                </div>
+                <div class="stat-card glass-card" style="background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.5rem; text-align: center;">
+                  <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 0.5rem;">2,340</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.9rem; font-weight: 600;">Calories Burned</div>
+                </div>
+                <div class="stat-card glass-card" style="background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 1.5rem; text-align: center;">
+                  <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 0.5rem;">12</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.9rem; font-weight: 600;">Days Streak</div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="hero-actions" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="primary large buttonGlow" data-action="booking" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                    <line x1="16" y1="2" x2="16" y2="6"/>
+                    <line x1="8" y1="2" x2="8" y2="6"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                  </svg>
+                  Book a Session
+                </button>
+                <button class="secondary large" data-action="shop" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                    <circle cx="9" cy="21" r="1"/>
+                    <circle cx="20" cy="21" r="1"/>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                  </svg>
+                  Shop Gear
+                </button>
+                <button class="outline large" data-action="feedback" style="display: flex; align-items: center; gap: 0.5rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
+                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                  </svg>
+                  Send Feedback
+                </button>
+              </div>
+            </div>
+
+            <!-- Hero Visual -->
+            <div class="hero-visual" style="position: relative;">
+              <div class="hero-visual-card glass-card widgetMorph" style="width: 300px; height: 400px; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                <div class="hero-visual-icon" style="font-size: 6rem; margin-bottom: 1rem; animation: pulse 3s ease-in-out infinite;">🏋️‍♀️</div>
+                <h3 style="margin: 0 0 1rem; font-size: 1.5rem; font-weight: 700;">PowerZone Pro</h3>
+                <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 1rem;">Advanced training programs with AI-powered workout recommendations.</p>
+                <div class="hero-visual-features" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; width: 100%;">
+                  <div class="feature-item" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: var(--fluent-accent-primary);">
+                      <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                    <span>Personalized Workouts</span>
+                  </div>
+                  <div class="feature-item" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: var(--fluent-accent-primary);">
+                      <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                    <span>Progress Tracking</span>
+                  </div>
+                  <div class="feature-item" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: var(--fluent-accent-primary);">
+                      <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                    <span>Nutrition Guidance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="recent-activity glass-card widgetMorph" style="padding: 2rem; margin-bottom: 2rem;">
+          <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12,6 12,12 16,14"/>
+            </svg>
+            Recent Activity
+          </h2>
+          <div class="activity-list" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="activity-item" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="activity-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <path d="M20 7l-8-4-8 4v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+              </div>
+              <div class="activity-content" style="flex: 1;">
+                <div class="activity-title" style="font-weight: 600;">Completed Upper Body Workout</div>
+                <div class="activity-meta" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">2 hours ago • 45 minutes • 320 calories</div>
+              </div>
+              <div class="activity-status" style="color: var(--fluent-accent-primary); font-weight: 600;">✓</div>
+            </div>
+
+            <div class="activity-item" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="activity-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                </svg>
+              </div>
+              <div class="activity-content" style="flex: 1;">
+                <div class="activity-title" style="font-weight: 600;">Purchased Protein Shaker</div>
+                <div class="activity-meta" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Yesterday • Order #12345</div>
+              </div>
+              <div class="activity-status" style="color: var(--fluent-accent-secondary); font-weight: 600;">✓</div>
+            </div>
+
+            <div class="activity-item" style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="activity-icon" style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                </svg>
+              </div>
+              <div class="activity-content" style="flex: 1;">
+                <div class="activity-title" style="font-weight: 600;">Left Feedback</div>
+                <div class="activity-meta" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">3 days ago • Rating: 5/5</div>
+              </div>
+              <div class="activity-status" style="color: #10b981; font-weight: 600;">✓</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEMBERSHIP -->
+      <section id="membership" class="section" aria-label="Membership Plans" tabindex="0">
+        <div class="section-header">
+          <h1>Membership Plans</h1>
+          <p>Choose the perfect plan for your fitness journey. All plans include access to our premium facilities, expert trainers, and state-of-the-art equipment.</p>
+        </div>
+
+        <!-- Membership Plans Grid -->
+        <div class="membership-plans" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <!-- Basic Plan -->
+          <div class="membership-card glass-card cardBounce" style="padding: 2rem; text-align: center; position: relative;">
+            <div class="plan-badge" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--fluent-accent-primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">Most Popular</div>
+            <div class="plan-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 40px; height: 40px;">
+                <use href="#icon-dumbbell"></use>
+              </svg>
+            </div>
+            <h3 style="margin: 0 0 0.5rem; font-size: 1.8rem; font-weight: 700;">Basic</h3>
+            <div class="plan-price" style="font-size: 3rem; font-weight: 800; color: var(--fluent-accent-primary); margin-bottom: 1rem;">
+              $29<span style="font-size: 1.2rem; font-weight: 600;">/month</span>
+            </div>
+            <ul class="plan-features" style="list-style: none; padding: 0; margin: 0 0 2rem; text-align: left;">
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-primary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>24/7 gym access</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-primary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Free weights & cardio equipment</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-primary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Locker room access</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-primary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Basic fitness assessment</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-primary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Mobile app access</span>
+              </li>
+            </ul>
+            <button class="primary large buttonGlow" data-action="join-basic">Join Basic Plan</button>
+          </div>
+
+          <!-- Premium Plan -->
+          <div class="membership-card glass-card cardBounce" style="padding: 2rem; text-align: center; border: 2px solid var(--fluent-accent-primary);">
+            <div class="plan-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 40px; height: 40px;">
+                <use href="#icon-trophy"></use>
+              </svg>
+            </div>
+            <h3 style="margin: 0 0 0.5rem; font-size: 1.8rem; font-weight: 700;">Premium</h3>
+            <div class="plan-price" style="font-size: 3rem; font-weight: 800; color: var(--fluent-accent-secondary); margin-bottom: 1rem;">
+              $59<span style="font-size: 1.2rem; font-weight: 600;">/month</span>
+            </div>
+            <ul class="plan-features" style="list-style: none; padding: 0; margin: 0 0 2rem; text-align: left;">
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Everything in Basic</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>2 personal training sessions/month</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Group fitness classes</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Nutrition consultation</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Sauna & spa access</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: var(--fluent-accent-secondary); flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Priority booking</span>
+              </li>
+            </ul>
+            <button class="primary large buttonGlow" data-action="join-premium">Join Premium Plan</button>
+          </div>
+
+          <!-- Elite Plan -->
+          <div class="membership-card glass-card cardBounce" style="padding: 2rem; text-align: center;">
+            <div class="plan-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 40px; height: 40px;">
+                <use href="#icon-target"></use>
+              </svg>
+            </div>
+            <h3 style="margin: 0 0 0.5rem; font-size: 1.8rem; font-weight: 700;">Elite</h3>
+            <div class="plan-price" style="font-size: 3rem; font-weight: 800; color: #8b5cf6; margin-bottom: 1rem;">
+              $99<span style="font-size: 1.2rem; font-weight: 600;">/month</span>
+            </div>
+            <ul class="plan-features" style="list-style: none; padding: 0; margin: 0 0 2rem; text-align: left;">
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Everything in Premium</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Unlimited personal training</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Private locker & towel service</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Recovery zone access</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>Guest privileges (2/month)</span>
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.95rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px; color: #8b5cf6; flex-shrink: 0;">
+                  <use href="#icon-check"></use>
+                </svg>
+                <span>VIP lounge access</span>
+              </li>
+            </ul>
+            <button class="primary large buttonGlow" data-action="join-elite">Join Elite Plan</button>
+          </div>
+        </div>
+
+        <!-- Membership Benefits -->
+        <div class="membership-benefits glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Why Choose Fitness Club?</h2>
+          <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="benefit-item" style="text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: var(--fluent-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-trainer"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Expert Trainers</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.95rem;">Certified professionals with years of experience to guide your fitness journey.</p>
+            </div>
+
+            <div class="benefit-item" style="text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: var(--fluent-accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-dumbbell"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Premium Equipment</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.95rem;">State-of-the-art fitness equipment from top brands for optimal performance.</p>
+            </div>
+
+            <div class="benefit-item" style="text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-heart"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Community Support</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.95rem;">Join a supportive community of fitness enthusiasts and make lasting friendships.</p>
+            </div>
+
+            <div class="benefit-item" style="text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-clock"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">24/7 Access</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.95rem;">Round-the-clock access to facilities so you can work out on your schedule.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOKING -->
+      <section id="booking" class="section" aria-label="Trainer Booking" tabindex="0">
+        <div class="section-header">
+          <h1>Book a Session</h1>
+          <p>Schedule your personal training sessions with our expert trainers. Choose from various session types and find the perfect time that fits your schedule.</p>
+        </div>
+
+        <!-- Session Types -->
+        <div class="session-types glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Session Types</h2>
+          <div class="types-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div class="session-type-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="session-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-user"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Personal Training</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">One-on-one sessions with certified trainers tailored to your goals.</p>
+              <div class="session-price" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 1rem;">$75/session</div>
+              <button class="primary small buttonGlow" data-action="book-personal">Book Now</button>
+            </div>
+
+            <div class="session-type-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="session-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-trainer"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Group Training</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">High-energy group sessions with up to 8 participants for motivation.</p>
+              <div class="session-price" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-secondary); margin-bottom: 1rem;">$25/person</div>
+              <button class="primary small buttonGlow" data-action="book-group">Book Now</button>
+            </div>
+
+            <div class="session-type-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="session-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-target"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Specialty Sessions</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Yoga, Pilates, HIIT, and specialized training programs.</p>
+              <div class="session-price" style="font-size: 1.5rem; font-weight: 700; color: #8b5cf6; margin-bottom: 1rem;">$35/session</div>
+              <button class="primary small buttonGlow" data-action="book-specialty">Book Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Trainers -->
+        <div class="featured-trainers glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Meet Our Trainers</h2>
+          <div class="trainers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="trainer-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="trainer-avatar" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">👨‍💼</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Marcus Johnson</h4>
+              <p style="margin: 0 0 0.5rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Strength & Conditioning Specialist</p>
+              <div class="trainer-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">4.9/5</span>
+              </div>
+              <p style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">8+ years experience • Certified NSCA-CSCS</p>
+              <button class="primary small buttonGlow" data-action="book-marcus">Book with Marcus</button>
+            </div>
+
+            <div class="trainer-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="trainer-avatar" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">👩‍💼</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Sarah Chen</h4>
+              <p style="margin: 0 0 0.5rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Yoga & Mindfulness Expert</p>
+              <div class="trainer-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">5.0/5</span>
+              </div>
+              <p style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">6+ years experience • RYT-500 Certified</p>
+              <button class="primary small buttonGlow" data-action="book-sarah">Book with Sarah</button>
+            </div>
+
+            <div class="trainer-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="trainer-avatar" style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">👨‍💼</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Alex Rodriguez</h4>
+              <p style="margin: 0 0 0.5rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">HIIT & Performance Coach</p>
+              <div class="trainer-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">4.8/5</span>
+              </div>
+              <p style="margin: 0 0 1rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">10+ years experience • NASM-CPT Certified</p>
+              <button class="primary small buttonGlow" data-action="book-alex">Book with Alex</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Booking Calendar -->
+        <div class="booking-calendar glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Quick Book</h2>
+          <div class="calendar-widget" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+            <div class="time-slot" style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; text-align: center;">
+              <div class="day-label" style="font-weight: 600; margin-bottom: 0.5rem;">Today</div>
+              <div class="available-times" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="time-button outline small" data-time="09:00">9:00 AM</button>
+                <button class="time-button outline small" data-time="14:00">2:00 PM</button>
+                <button class="time-button outline small" data-time="18:00">6:00 PM</button>
+              </div>
+            </div>
+
+            <div class="time-slot" style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; text-align: center;">
+              <div class="day-label" style="font-weight: 600; margin-bottom: 0.5rem;">Tomorrow</div>
+              <div class="available-times" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="time-button outline small" data-time="10:00">10:00 AM</button>
+                <button class="time-button outline small" data-time="15:30">3:30 PM</button>
+                <button class="time-button outline small" data-time="19:00">7:00 PM</button>
+              </div>
+            </div>
+
+            <div class="time-slot" style="padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; text-align: center;">
+              <div class="day-label" style="font-weight: 600; margin-bottom: 0.5rem;">This Week</div>
+              <div class="available-times" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="time-button outline small" data-time="weekend">Weekend Slots</button>
+                <button class="time-button outline small" data-time="evening">Evening Sessions</button>
+                <button class="time-button outline small" data-time="custom">Custom Time</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SHOP -->
+      <section id="shop" class="section" aria-label="Fitness Shop" tabindex="0">
+        <div class="section-header">
+          <h1>Fitness Shop</h1>
+          <p>Premium gear and supplements for your fitness journey. High-quality products from trusted brands to support your goals.</p>
+        </div>
+
+        <!-- Shop Categories -->
+        <div class="shop-categories glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Shop by Category</h2>
+          <div class="categories-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+            <div class="category-card glass-card cardBounce" style="padding: 1.5rem; text-align: center; cursor: pointer;" data-category="supplements">
+              <div class="category-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-dumbbell"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Supplements</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Protein, vitamins, and performance enhancers</p>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 1.5rem; text-align: center; cursor: pointer;" data-category="equipment">
+              <div class="category-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-trainer"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Equipment</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Home gym essentials and accessories</p>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 1.5rem; text-align: center; cursor: pointer;" data-category="apparel">
+              <div class="category-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-user"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Apparel</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Performance wear and casual fitness clothing</p>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 1.5rem; text-align: center; cursor: pointer;" data-category="recovery">
+              <div class="category-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #10b981, #06b6d4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-heart"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Recovery</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Foam rollers, massage tools, and recovery aids</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Products -->
+        <div class="featured-products glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Featured Products</h2>
+          <div class="products-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+            <div class="product-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="product-image" style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 3rem;">💪</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Whey Protein Isolate</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Premium quality whey protein with 25g protein per serving</p>
+              <div class="product-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">4.8/5</span>
+              </div>
+              <div class="product-price" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 1rem;">$49.99</div>
+              <button class="primary small buttonGlow" data-action="add-to-cart" data-product="whey-protein">Add to Cart</button>
+            </div>
+
+            <div class="product-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="product-image" style="width: 120px; height: 120px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 3rem;">🏋️‍♀️</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Adjustable Dumbbells</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">5-50lb adjustable weights with quick-change mechanism</p>
+              <div class="product-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">4.9/5</span>
+              </div>
+              <div class="product-price" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-secondary); margin-bottom: 1rem;">$299.99</div>
+              <button class="primary small buttonGlow" data-action="add-to-cart" data-product="dumbbells">Add to Cart</button>
+            </div>
+
+            <div class="product-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="product-image" style="width: 120px; height: 120px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 3rem;">🧘‍♀️</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Yoga Mat Premium</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Non-slip, eco-friendly yoga mat with carrying strap</p>
+              <div class="product-rating" style="display: flex; align-items: center; justify-content: center; gap: 0.25rem; margin-bottom: 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px; color: #fbbf24;">
+                  <use href="#icon-feedback"></use>
+                </svg>
+                <span style="margin-left: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">4.7/5</span>
+              </div>
+              <div class="product-price" style="font-size: 1.5rem; font-weight: 700; color: #8b5cf6; margin-bottom: 1rem;">$79.99</div>
+              <button class="primary small buttonGlow" data-action="add-to-cart" data-product="yoga-mat">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shop Features -->
+        <div class="shop-features glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Why Shop With Us?</h2>
+          <div class="features-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="feature-item" style="text-align: center;">
+              <div class="feature-icon" style="width: 60px; height: 60px; background: var(--fluent-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-truck"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Free Shipping</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Free shipping on orders over $50. Fast delivery within 2-3 business days.</p>
+            </div>
+
+            <div class="feature-item" style="text-align: center;">
+              <div class="feature-icon" style="width: 60px; height: 60px; background: var(--fluent-accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-shield"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Quality Guarantee</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">All products backed by our 30-day satisfaction guarantee and warranty.</p>
+            </div>
+
+            <div class="feature-item" style="text-align: center;">
+              <div class="feature-icon" style="width: 60px; height: 60px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-heart"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Expert Support</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Get personalized recommendations from our fitness experts and nutritionists.</p>
+            </div>
+
+            <div class="feature-item" style="text-align: center;">
+              <div class="feature-icon" style="width: 60px; height: 60px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 30px; height: 30px;">
+                  <use href="#icon-refresh"></use>
+                </svg>
+              </div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Easy Returns</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Hassle-free returns within 30 days. Free return shipping on all items.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- POWERZONE -->
+      <section id="powerzone" class="section" aria-label="PowerZone Gallery" tabindex="0">
+        <div class="section-header">
+          <h1>PowerZone Gallery</h1>
+          <p>Showcase of our premium fitness equipment and facilities. Experience world-class training environments designed for peak performance.</p>
+        </div>
+
+        <!-- Equipment Gallery -->
+        <div class="equipment-gallery glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Premium Equipment</h2>
+          <div class="gallery-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="equipment-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="equipment-image" style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 4rem;">🏋️‍♀️</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Cardio Zone</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">State-of-the-art treadmills, ellipticals, and stationary bikes with interactive touchscreens and heart rate monitoring.</p>
+              <div class="equipment-features" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                <span class="feature-tag" style="background: rgba(0,194,255,0.1); color: var(--fluent-accent-primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">12 Treadmills</span>
+                <span class="feature-tag" style="background: rgba(0,194,255,0.1); color: var(--fluent-accent-primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">8 Ellipticals</span>
+                <span class="feature-tag" style="background: rgba(0,194,255,0.1); color: var(--fluent-accent-primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">10 Bikes</span>
+              </div>
+            </div>
+
+            <div class="equipment-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="equipment-image" style="width: 100%; height: 200px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 4rem;">💪</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Strength Training</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Complete free weights section with dumbbells, barbells, and plate-loaded machines for comprehensive strength building.</p>
+              <div class="equipment-features" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                <span class="feature-tag" style="background: rgba(34,197,94,0.1); color: var(--fluent-accent-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Free Weights</span>
+                <span class="feature-tag" style="background: rgba(34,197,94,0.1); color: var(--fluent-accent-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Power Racks</span>
+                <span class="feature-tag" style="background: rgba(34,197,94,0.1); color: var(--fluent-accent-secondary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Cable Machines</span>
+              </div>
+            </div>
+
+            <div class="equipment-card glass-card cardBounce" style="padding: 1.5rem; text-align: center;">
+              <div class="equipment-image" style="width: 100%; height: 200px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 4rem;">🧘‍♀️</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Mind & Body Studio</h4>
+              <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem;">Dedicated space for yoga, pilates, and mindfulness practices with hardwood floors and wall-to-wall mirrors.</p>
+              <div class="equipment-features" style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
+                <span class="feature-tag" style="background: rgba(139,92,246,0.1); color: #8b5cf6; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Yoga Mats</span>
+                <span class="feature-tag" style="background: rgba(139,92,246,0.1); color: #8b5cf6; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Blocks & Straps</span>
+                <span class="feature-tag" style="background: rgba(139,92,246,0.1); color: #8b5cf6; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Sound System</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facilities Tour -->
+        <div class="facilities-tour glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Explore Our Facilities</h2>
+          <div class="facilities-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="facility-item" style="text-align: center;">
+              <div class="facility-image" style="width: 100%; height: 150px; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">🏊‍♀️</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Olympic Pool</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">25-meter heated pool with lap lanes and aqua fitness classes.</p>
+            </div>
+
+            <div class="facility-item" style="text-align: center;">
+              <div class="facility-image" style="width: 100%; height: 150px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">🛀</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Recovery Spa</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Sauna, steam room, and massage therapy for optimal recovery.</p>
+            </div>
+
+            <div class="facility-item" style="text-align: center;">
+              <div class="facility-image" style="width: 100%; height: 150px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">☕</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Nutrition Bar</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Healthy smoothies, protein bars, and nutritional guidance.</p>
+            </div>
+
+            <div class="facility-item" style="text-align: center;">
+              <div class="facility-image" style="width: 100%; height: 150px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">👥</div>
+              <h4 style="margin: 0 0 0.5rem; font-size: 1.2rem;">Group Fitness Studio</h4>
+              <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Spacious studio for HIIT, spin, and dance classes with premium sound.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Membership Perks -->
+        <div class="membership-perks glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">PowerZone Exclusive Perks</h2>
+          <div class="perks-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            <div class="perk-item" style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="perk-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <use href="#icon-trophy"></use>
+                </svg>
+              </div>
+              <div>
+                <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Priority Equipment Access</h4>
+                <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Skip the lines and get first access to popular equipment during peak hours.</p>
+              </div>
+            </div>
+
+            <div class="perk-item" style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="perk-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <use href="#icon-user"></use>
+                </svg>
+              </div>
+              <div>
+                <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">VIP Locker Rooms</h4>
+                <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Private changing areas with premium amenities and towel service.</p>
+              </div>
+            </div>
+
+            <div class="perk-item" style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="perk-icon" style="width: 40px; height: 40px; background: #10b981; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <use href="#icon-heart"></use>
+                </svg>
+              </div>
+              <div>
+                <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Recovery Lounge</h4>
+                <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Exclusive access to massage chairs, compression therapy, and relaxation areas.</p>
+              </div>
+            </div>
+
+            <div class="perk-item" style="display: flex; align-items: flex-start; gap: 1rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+              <div class="perk-icon" style="width: 40px; height: 40px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" style="width: 20px; height: 20px;">
+                  <use href="#icon-clock"></use>
+                </svg>
+              </div>
+              <div>
+                <h4 style="margin: 0 0 0.5rem; font-size: 1.1rem;">Extended Hours</h4>
+                <p style="margin: 0; color: var(--fluent-text-secondary); font-size: 0.9rem;">Access to facilities during exclusive early morning and late evening hours.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWS -->
+      <section id="news" class="section" aria-label="Fitness News" tabindex="0">
+        <div class="section-header">
+          <h1>Fitness News</h1>
+          <p>Latest updates, tips, and stories from the fitness world. Stay informed with expert advice, workout trends, and health insights.</p>
+        </div>
+
+        <!-- Featured Article -->
+        <div class="featured-article glass-card heroSlideIn" style="margin-top: 3rem; padding: 2rem; position: relative; overflow: hidden;">
+          <div class="article-bg" style="position: absolute; top: 0; right: 0; width: 300px; height: 100%; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); opacity: 0.1; border-radius: 0 24px 24px 0;"></div>
+          <div class="article-content" style="display: grid; grid-template-columns: 1fr auto; gap: 2rem; position: relative; z-index: 2;">
+            <div>
+              <div class="article-meta" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span class="article-category" style="background: var(--fluent-accent-primary); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Featured</span>
+                <span class="article-date" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">September 15, 2025</span>
+                <span class="article-read-time" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">5 min read</span>
+              </div>
+              <h2 style="margin: 0 0 1rem; font-size: 2rem; font-weight: 700;">The Science Behind HIIT: Why High-Intensity Workouts Work</h2>
+              <p style="margin: 0 0 1.5rem; color: var(--fluent-text-secondary); font-size: 1rem; line-height: 1.6;">Discover the latest research on high-intensity interval training and how it can transform your fitness routine. Learn about the metabolic benefits, cardiovascular improvements, and time efficiency that make HIIT a game-changer for busy professionals.</p>
+              <div class="article-author" style="display: flex; align-items: center; gap: 0.75rem;">
+                <div class="author-avatar" style="width: 40px; height: 40px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">👩‍⚕️</div>
+                <div>
+                  <div class="author-name" style="font-weight: 600; font-size: 0.9rem;">Dr. Sarah Mitchell</div>
+                  <div class="author-title" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Exercise Physiologist</div>
+                </div>
+              </div>
+            </div>
+            <div class="article-image" style="width: 250px; height: 180px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 4rem;">🏃‍♀️</div>
+          </div>
+        </div>
+
+        <!-- News Grid -->
+        <div class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <div class="news-card glass-card cardBounce" style="padding: 1.5rem;">
+            <div class="news-image" style="width: 100%; height: 180px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">🥗</div>
+            <div class="news-meta" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <span class="news-category" style="background: var(--fluent-accent-secondary); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">Nutrition</span>
+              <span class="news-date" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">September 12, 2025</span>
+            </div>
+            <h3 style="margin: 0 0 0.75rem; font-size: 1.3rem; font-weight: 600;">10 Superfoods for Post-Workout Recovery</h3>
+            <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5;">Fuel your body right after intense training with these nutrient-dense foods that promote muscle repair and reduce inflammation.</p>
+            <button class="outline small" data-action="read-article" data-article="superfoods">Read More</button>
+          </div>
+
+          <div class="news-card glass-card cardBounce" style="padding: 1.5rem;">
+            <div class="news-image" style="width: 100%; height: 180px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">🧠</div>
+            <div class="news-meta" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <span class="news-category" style="background: #8b5cf6; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">Mental Health</span>
+              <span class="news-date" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">September 10, 2025</span>
+            </div>
+            <h3 style="margin: 0 0 0.75rem; font-size: 1.3rem; font-weight: 600;">Exercise and Mental Wellness: The Mind-Body Connection</h3>
+            <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5;">Explore how regular physical activity can improve mental health, reduce stress, and boost overall well-being.</p>
+            <button class="outline small" data-action="read-article" data-article="mental-health">Read More</button>
+          </div>
+
+          <div class="news-card glass-card cardBounce" style="padding: 1.5rem;">
+            <div class="news-image" style="width: 100%; height: 180px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">📊</div>
+            <div class="news-meta" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <span class="news-category" style="background: #f59e0b; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">Research</span>
+              <span class="news-date" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">September 8, 2025</span>
+            </div>
+            <h3 style="margin: 0 0 0.75rem; font-size: 1.3rem; font-weight: 600;">2025 Fitness Trends: What's Hot and What's Not</h3>
+            <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5;">From wearable tech to sustainable fitness, discover the latest trends shaping the future of health and wellness.</p>
+            <button class="outline small" data-action="read-article" data-article="trends">Read More</button>
+          </div>
+
+          <div class="news-card glass-card cardBounce" style="padding: 1.5rem;">
+            <div class="news-image" style="width: 100%; height: 180px; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 3rem;">🏆</div>
+            <div class="news-meta" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+              <span class="news-category" style="background: #06b6d4; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">Success Stories</span>
+              <span class="news-date" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">September 5, 2025</span>
+            </div>
+            <h3 style="margin: 0 0 0.75rem; font-size: 1.3rem; font-weight: 600;">From Couch to 5K: Sarah's Incredible Journey</h3>
+            <p style="margin: 0 0 1rem; color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5;">Meet Sarah, who transformed her life through our beginner running program and completed her first 5K race.</p>
+            <button class="outline small" data-action="read-article" data-article="success-story">Read More</button>
+          </div>
+        </div>
+
+        <!-- Newsletter Signup -->
+        <div class="newsletter-signup glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem; text-align: center;">
+          <h2 style="margin-bottom: 1rem;">Stay Updated</h2>
+          <p style="margin-bottom: 2rem; color: var(--fluent-text-secondary); max-width: 500px; margin-left: auto; margin-right: auto;">Subscribe to our newsletter for the latest fitness tips, workout plans, and exclusive member offers delivered to your inbox.</p>
+          <div class="newsletter-form" style="display: flex; gap: 1rem; max-width: 400px; margin: 0 auto;">
+            <input type="email" placeholder="Enter your email" style="flex: 1; padding: 0.75rem 1rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary);" />
+            <button class="primary buttonGlow" data-action="subscribe-newsletter">Subscribe</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FRANCHISE -->
+      <section id="franchise" class="section" aria-label="Franchise Opportunities" tabindex="0">
+        <div class="section-header">
+          <h1>Franchise Opportunities</h1>
+          <p>Join the fitness revolution. Become part of a growing network of premium fitness clubs with proven success and comprehensive support.</p>
+        </div>
+
+        <!-- Franchise Hero -->
+        <div class="franchise-hero glass-card heroSlideIn" style="margin-top: 3rem; padding: 3rem; text-align: center;">
+          <h2 style="margin-bottom: 1rem; font-size: 2.5rem;">Own Your Success Story</h2>
+          <p style="margin-bottom: 2rem; font-size: 1.2rem; color: var(--fluent-text-secondary); max-width: 600px; margin-left: auto; margin-right: auto;">Join thousands of successful franchise owners who have built thriving businesses with our proven model, comprehensive training, and ongoing support.</p>
+          <div class="hero-stats" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; margin-top: 2rem;">
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary);">500+</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary);">Locations Worldwide</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary);">95%</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary);">Success Rate</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary);">$2.5M</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary);">Avg. Annual Revenue</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary);">18</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary);">Months ROI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Franchise Packages -->
+        <div class="franchise-packages" style="margin-top: 3rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Choose Your Investment Level</h2>
+          <div class="packages-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <div class="package-card glass-card cardBounce" style="padding: 2rem; text-align: center;">
+              <div class="package-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🏢</div>
+              <h3 style="margin-bottom: 1rem;">Standard Club</h3>
+              <div class="package-price" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 1rem;">$250K - $400K</div>
+              <ul style="text-align: left; margin-bottom: 2rem; list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 3,000 - 5,000 sq ft facility</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Complete equipment package</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Marketing support</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 12-week training program</li>
+              </ul>
+              <button class="primary buttonGlow" data-action="inquire-franchise" data-package="standard">Learn More</button>
+            </div>
+
+            <div class="package-card glass-card cardBounce featured" style="padding: 2rem; text-align: center; border: 2px solid var(--fluent-accent-primary); position: relative;">
+              <div class="featured-badge" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--fluent-accent-primary); color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Most Popular</div>
+              <div class="package-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🏆</div>
+              <h3 style="margin-bottom: 1rem;">Premium Club</h3>
+              <div class="package-price" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 1rem;">$400K - $650K</div>
+              <ul style="text-align: left; margin-bottom: 2rem; list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 5,000 - 8,000 sq ft facility</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Premium equipment & spa</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Advanced marketing package</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 16-week training program</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Priority territory selection</li>
+              </ul>
+              <button class="primary buttonGlow" data-action="inquire-franchise" data-package="premium">Learn More</button>
+            </div>
+
+            <div class="package-card glass-card cardBounce" style="padding: 2rem; text-align: center;">
+              <div class="package-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🌟</div>
+              <h3 style="margin-bottom: 1rem;">Luxury Club</h3>
+              <div class="package-price" style="font-size: 2rem; font-weight: 700; color: var(--fluent-accent-primary); margin-bottom: 1rem;">$650K - $1M</div>
+              <ul style="text-align: left; margin-bottom: 2rem; list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 8,000+ sq ft luxury facility</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Full-service spa & cafe</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Premium marketing & PR</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> 20-week executive training</li>
+                <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><span style="color: var(--fluent-accent-primary);">✓</span> Exclusive territory rights</li>
+              </ul>
+              <button class="primary buttonGlow" data-action="inquire-franchise" data-package="luxury">Learn More</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Franchise Benefits -->
+        <div class="franchise-benefits" style="margin-top: 3rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">Why Choose Our Franchise?</h2>
+          <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div class="benefit-card glass-card widgetMorph" style="padding: 1.5rem; text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">🎯</div>
+              <h4 style="margin-bottom: 0.75rem;">Proven Business Model</h4>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem;">20+ years of experience with a battle-tested system that delivers consistent results.</p>
+            </div>
+
+            <div class="benefit-card glass-card widgetMorph" style="padding: 1.5rem; text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">📚</div>
+              <h4 style="margin-bottom: 0.75rem;">Comprehensive Training</h4>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Complete training program covering operations, management, marketing, and fitness expertise.</p>
+            </div>
+
+            <div class="benefit-card glass-card widgetMorph" style="padding: 1.5rem; text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">🤝</div>
+              <h4 style="margin-bottom: 0.75rem;">Ongoing Support</h4>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem;">24/7 support, regular updates, marketing assistance, and continuous improvement resources.</p>
+            </div>
+
+            <div class="benefit-card glass-card widgetMorph" style="padding: 1.5rem; text-align: center;">
+              <div class="benefit-icon" style="width: 60px; height: 60px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">📈</div>
+              <h4 style="margin-bottom: 0.75rem;">Marketing Excellence</h4>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem;">National marketing campaigns, local support, and digital marketing tools to drive growth.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Franchise Application -->
+        <div class="franchise-application glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <div class="application-content" style="display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;">
+            <div>
+              <h2 style="margin-bottom: 1rem;">Ready to Get Started?</h2>
+              <p style="margin-bottom: 1.5rem; color: var(--fluent-text-secondary); font-size: 1rem;">Take the first step towards owning your own successful fitness club. Our team will guide you through the entire process.</p>
+              <div class="application-steps" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                <div class="step" style="text-align: center;">
+                  <div class="step-number" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 600;">1</div>
+                  <div class="step-label" style="font-size: 0.8rem; color: var(--fluent-text-secondary);">Discovery Call</div>
+                </div>
+                <div class="step" style="text-align: center;">
+                  <div class="step-number" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 600;">2</div>
+                  <div class="step-label" style="font-size: 0.8rem; color: var(--fluent-text-secondary);">Site Selection</div>
+                </div>
+                <div class="step" style="text-align: center;">
+                  <div class="step-number" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 600;">3</div>
+                  <div class="step-label" style="font-size: 0.8rem; color: var(--fluent-text-secondary);">Training</div>
+                </div>
+                <div class="step" style="text-align: center;">
+                  <div class="step-number" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.5rem; font-weight: 600;">4</div>
+                  <div class="step-label" style="font-size: 0.8rem; color: var(--fluent-text-secondary);">Grand Opening</div>
+                </div>
+              </div>
+            </div>
+            <div class="application-cta">
+              <button class="primary large buttonGlow" data-action="apply-franchise">Apply Now</button>
+              <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--fluent-text-secondary); text-align: center;">No upfront fees to apply</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEEDBACK -->
+      <section id="feedback" class="section" aria-label="Send Feedback" tabindex="0">
+        <div class="section-header">
+          <h1>Share Your Feedback</h1>
+          <p>Your opinion matters. Help us improve our services and create the best fitness experience possible.</p>
+        </div>
+
+        <!-- Feedback Stats -->
+        <div class="feedback-stats glass-card heroSlideIn" style="margin-top: 3rem; padding: 2rem;">
+          <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; text-align: center;">
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2.5rem; font-weight: 700; color: var(--fluent-accent-primary);">4.9</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary); margin-top: 0.5rem;">Average Rating</div>
+              <div class="stat-stars" style="margin-top: 0.5rem;">★★★★★</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2.5rem; font-weight: 700; color: var(--fluent-accent-primary);">50K+</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary); margin-top: 0.5rem;">Happy Members</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2.5rem; font-weight: 700; color: var(--fluent-accent-primary);">98%</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary); margin-top: 0.5rem;">Satisfaction Rate</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number" style="font-size: 2.5rem; font-weight: 700; color: var(--fluent-accent-primary);">24/7</div>
+              <div class="stat-label" style="color: var(--fluent-text-secondary); margin-top: 0.5rem;">Support Available</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback Categories -->
+        <div class="feedback-categories" style="margin-top: 3rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">How can we help you today?</h2>
+          <div class="categories-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="general">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">💬</div>
+              <h3 style="margin-bottom: 1rem;">General Feedback</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Share your overall experience, suggestions for improvement, or general comments about our services.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="general">Give Feedback</button>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="facilities">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🏢</div>
+              <h3 style="margin-bottom: 1rem;">Facilities & Equipment</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Tell us about your experience with our equipment, cleanliness, maintenance, or facility conditions.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="facilities">Give Feedback</button>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="trainers">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">👨‍💼</div>
+              <h3 style="margin-bottom: 1rem;">Trainers & Classes</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Rate your trainer sessions, group classes, or provide feedback on our fitness instructors.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="trainers">Give Feedback</button>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="membership">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🎫</div>
+              <h3 style="margin-bottom: 1rem;">Membership & Billing</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Questions about billing, membership options, or account-related concerns.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="membership">Give Feedback</button>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="support">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">🆘</div>
+              <h3 style="margin-bottom: 1rem;">Customer Support</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Share your experience with our customer service team or technical support.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="support">Give Feedback</button>
+            </div>
+
+            <div class="category-card glass-card cardBounce" style="padding: 2rem; text-align: center; cursor: pointer;" data-feedback-category="complaint">
+              <div class="category-icon" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem;">⚠️</div>
+              <h3 style="margin-bottom: 1rem;">Report an Issue</h3>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Report maintenance issues, safety concerns, or other problems that need immediate attention.</p>
+              <button class="outline buttonGlow" data-action="feedback-category" data-category="complaint">Report Issue</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Reviews -->
+        <div class="recent-reviews" style="margin-top: 3rem;">
+          <h2 style="text-align: center; margin-bottom: 2rem;">What Our Members Say</h2>
+          <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+            <div class="review-card glass-card widgetMorph" style="padding: 1.5rem;">
+              <div class="review-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div class="review-avatar" style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">SM</div>
+                <div>
+                  <div class="review-name" style="font-weight: 600;">Sarah Mitchell</div>
+                  <div class="review-rating" style="color: #fbbf24; margin-top: 0.25rem;">★★★★★</div>
+                </div>
+              </div>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">"The trainers are incredibly knowledgeable and the facilities are always clean and well-maintained. I've seen amazing results in just 3 months!"</p>
+              <div class="review-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--fluent-text-secondary);">
+                <span>Personal Training</span>
+                <span>2 weeks ago</span>
+              </div>
+            </div>
+
+            <div class="review-card glass-card widgetMorph" style="padding: 1.5rem;">
+              <div class="review-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div class="review-avatar" style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">MJ</div>
+                <div>
+                  <div class="review-name" style="font-weight: 600;">Marcus Johnson</div>
+                  <div class="review-rating" style="color: #fbbf24; margin-top: 0.25rem;">★★★★★</div>
+                </div>
+              </div>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">"The group classes are fantastic and the community here is so supportive. The equipment is top-notch and the staff is always helpful."</p>
+              <div class="review-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--fluent-text-secondary);">
+                <span>Group Fitness</span>
+                <span>1 week ago</span>
+              </div>
+            </div>
+
+            <div class="review-card glass-card widgetMorph" style="padding: 1.5rem;">
+              <div class="review-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <div class="review-avatar" style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">LC</div>
+                <div>
+                  <div class="review-name" style="font-weight: 600;">Lisa Chen</div>
+                  <div class="review-rating" style="color: #fbbf24; margin-top: 0.25rem;">★★★★★</div>
+                </div>
+              </div>
+              <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">"Love the 24/7 access and the recovery lounge. The nutrition guidance has been invaluable for my fitness journey."</p>
+              <div class="review-meta" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--fluent-text-secondary);">
+                <span>Membership Experience</span>
+                <span>3 days ago</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Feedback Form -->
+        <div class="quick-feedback glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem;">
+          <h2 style="text-align: center; margin-bottom: 1rem;">Quick Feedback</h2>
+          <p style="text-align: center; color: var(--fluent-text-secondary); margin-bottom: 2rem;">Rate your overall experience and leave a quick comment</p>
+          <div class="feedback-form" style="max-width: 500px; margin: 0 auto;">
+            <div class="rating-input" style="text-align: center; margin-bottom: 2rem;">
+              <label style="display: block; margin-bottom: 1rem; font-weight: 600;">How would you rate your experience?</label>
+              <div class="stars" style="font-size: 2rem; cursor: pointer;">
+                <span class="star" data-rating="1">☆</span>
+                <span class="star" data-rating="2">☆</span>
+                <span class="star" data-rating="3">☆</span>
+                <span class="star" data-rating="4">☆</span>
+                <span class="star" data-rating="5">☆</span>
+              </div>
+            </div>
+            <div class="comment-input" style="margin-bottom: 2rem;">
+              <label for="quickComment" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Comments (optional)</label>
+              <textarea id="quickComment" placeholder="Tell us what you think..." style="width: 100%; min-height: 80px; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary); resize: vertical;"></textarea>
+            </div>
+            <button class="primary large buttonGlow" data-action="submit-quick-feedback" style="width: 100%;">Submit Feedback</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACCOUNT -->
+      <section id="account" class="section" aria-label="Account Management" tabindex="0">
+        <div class="section-header">
+          <h1>Account Management</h1>
+          <p>Manage your profile, membership, preferences, and account settings all in one place.</p>
+        </div>
+
+        <!-- Account Overview -->
+        <div class="account-overview glass-card heroSlideIn" style="margin-top: 3rem; padding: 2rem;">
+          <div class="overview-content" style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;">
+            <div class="profile-avatar" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">👤</div>
+            <div class="profile-info">
+              <h2 style="margin-bottom: 0.5rem;">Welcome back, [Member Name]</h2>
+              <div class="membership-status" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span class="status-badge" style="background: var(--fluent-accent-primary); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Premium Member</span>
+                <span class="member-since" style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Member since March 2024</span>
+              </div>
+              <div class="quick-stats" style="display: flex; gap: 2rem;">
+                <div class="stat">
+                  <div class="stat-value" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-primary);">47</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Workouts</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-primary);">12</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Classes</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-value" style="font-size: 1.5rem; font-weight: 700; color: var(--fluent-accent-primary);">8</div>
+                  <div class="stat-label" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Personal Sessions</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Management Grid -->
+        <div class="account-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <!-- Profile Settings -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👤</div>
+              <h3 style="margin: 0;">Profile Settings</h3>
+            </div>
+            <div class="card-content">
+              <div class="setting-item" style="margin-bottom: 1rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Full Name</label>
+                <input type="text" value="[Member Name]" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+              </div>
+              <div class="setting-item" style="margin-bottom: 1rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Email Address</label>
+                <input type="email" value="member@example.com" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+              </div>
+              <div class="setting-item" style="margin-bottom: 1.5rem;">
+                <label style="display: block; font-weight: 600; margin-bottom: 0.5rem;">Phone Number</label>
+                <input type="tel" value="(555) 123-4567" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+              </div>
+              <button class="primary buttonGlow" data-action="update-profile">Update Profile</button>
+            </div>
+          </div>
+
+          <!-- Membership Details -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--fluent-accent-secondary), #10b981); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🎫</div>
+              <h3 style="margin: 0;">Membership Details</h3>
+            </div>
+            <div class="card-content">
+              <div class="membership-info" style="margin-bottom: 1.5rem;">
+                <div class="info-item" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <span style="color: var(--fluent-text-secondary);">Current Plan:</span>
+                  <span style="font-weight: 600;">Premium Monthly</span>
+                </div>
+                <div class="info-item" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <span style="color: var(--fluent-text-secondary);">Monthly Fee:</span>
+                  <span style="font-weight: 600;">$59.99</span>
+                </div>
+                <div class="info-item" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
+                  <span style="color: var(--fluent-text-secondary);">Next Billing:</span>
+                  <span style="font-weight: 600;">Oct 15, 2025</span>
+                </div>
+                <div class="info-item" style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                  <span style="color: var(--fluent-text-secondary);">Status:</span>
+                  <span style="color: #10b981; font-weight: 600;">Active</span>
+                </div>
+              </div>
+              <div class="membership-actions" style="display: flex; gap: 0.75rem;">
+                <button class="outline small buttonGlow" data-action="upgrade-membership">Upgrade Plan</button>
+                <button class="outline small" data-action="manage-billing">Manage Billing</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preferences -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, #8b5cf6, #ec4899); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">⚙️</div>
+              <h3 style="margin: 0;">Preferences</h3>
+            </div>
+            <div class="card-content">
+              <div class="preference-item" style="margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                  <input type="checkbox" checked style="margin: 0;" />
+                  <span>Email notifications for class bookings</span>
+                </label>
+              </div>
+              <div class="preference-item" style="margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                  <input type="checkbox" checked style="margin: 0;" />
+                  <span>Weekly workout progress reports</span>
+                </label>
+              </div>
+              <div class="preference-item" style="margin-bottom: 1rem;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                  <input type="checkbox" style="margin: 0;" />
+                  <span>Promotional offers and discounts</span>
+                </label>
+              </div>
+              <div class="preference-item" style="margin-bottom: 1.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                  <input type="checkbox" checked style="margin: 0;" />
+                  <span>Maintenance and facility updates</span>
+                </label>
+              </div>
+              <button class="primary buttonGlow" data-action="save-preferences">Save Preferences</button>
+            </div>
+          </div>
+
+          <!-- Security Settings -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, #f59e0b, #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🔒</div>
+              <h3 style="margin: 0;">Security Settings</h3>
+            </div>
+            <div class="card-content">
+              <div class="security-item" style="margin-bottom: 1.5rem;">
+                <h4 style="margin-bottom: 1rem; font-size: 1rem;">Change Password</h4>
+                <div style="margin-bottom: 1rem;">
+                  <input type="password" placeholder="Current password" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+                  <input type="password" placeholder="New password" style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+                  <input type="password" placeholder="Confirm new password" style="width: 100%; padding: 0.5rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.05);" />
+                </div>
+                <button class="outline small buttonGlow" data-action="change-password">Update Password</button>
+              </div>
+              <div class="security-item">
+                <h4 style="margin-bottom: 1rem; font-size: 1rem;">Two-Factor Authentication</h4>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Add an extra layer of security</span>
+                  <button class="outline small" data-action="enable-2fa">Enable 2FA</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity History -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, #06b6d4, #0891b2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">📊</div>
+              <h3 style="margin: 0;">Recent Activity</h3>
+            </div>
+            <div class="card-content">
+              <div class="activity-list">
+                <div class="activity-item" style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                  <div class="activity-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">🏋️</div>
+                  <div>
+                    <div class="activity-title" style="font-weight: 600; font-size: 0.9rem;">Completed HIIT Class</div>
+                    <div class="activity-time" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">2 hours ago</div>
+                  </div>
+                </div>
+                <div class="activity-item" style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                  <div class="activity-icon" style="width: 40px; height: 40px; background: var(--fluent-accent-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">🛒</div>
+                  <div>
+                    <div class="activity-title" style="font-weight: 600; font-size: 0.9rem;">Purchased Protein Shakes</div>
+                    <div class="activity-time" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">1 day ago</div>
+                  </div>
+                </div>
+                <div class="activity-item" style="display: flex; gap: 1rem;">
+                  <div class="activity-icon" style="width: 40px; height: 40px; background: #8b5cf6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem;">📅</div>
+                  <div>
+                    <div class="activity-title" style="font-weight: 600; font-size: 0.9rem;">Booked Personal Training</div>
+                    <div class="activity-time" style="color: var(--fluent-text-secondary); font-size: 0.8rem;">3 days ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Support & Help -->
+          <div class="account-card glass-card cardBounce" style="padding: 2rem;">
+            <div class="card-header" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="card-icon" style="width: 50px; height: 50px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🆘</div>
+              <h3 style="margin: 0;">Support & Help</h3>
+            </div>
+            <div class="card-content">
+              <div class="support-options">
+                <button class="support-btn" style="width: 100%; margin-bottom: 0.75rem; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary); cursor: pointer; text-align: left;" data-action="contact-support">
+                  <div style="font-weight: 600; margin-bottom: 0.25rem;">Contact Support</div>
+                  <div style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Get help with your account or services</div>
+                </button>
+                <button class="support-btn" style="width: 100%; margin-bottom: 0.75rem; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary); cursor: pointer; text-align: left;" data-action="faq">
+                  <div style="font-weight: 600; margin-bottom: 0.25rem;">FAQ & Help Center</div>
+                  <div style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Find answers to common questions</div>
+                </button>
+                <button class="support-btn" style="width: 100%; margin-bottom: 0.75rem; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary); cursor: pointer; text-align: left;" data-action="report-issue">
+                  <div style="font-weight: 600; margin-bottom: 0.25rem;">Report an Issue</div>
+                  <div style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Report technical problems or bugs</div>
+                </button>
+                <button class="support-btn" style="width: 100%; padding: 0.75rem; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--fluent-text-primary); cursor: pointer; text-align: left;" data-action="delete-account">
+                  <div style="font-weight: 600; margin-bottom: 0.25rem;">Delete Account</div>
+                  <div style="color: var(--fluent-text-secondary); font-size: 0.8rem;">Permanently delete your account</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="account-actions glass-card widgetMorph" style="margin-top: 3rem; padding: 2rem; text-align: center;">
+          <h2 style="margin-bottom: 1rem;">Need to Make Changes?</h2>
+          <p style="margin-bottom: 2rem; color: var(--fluent-text-secondary); max-width: 500px; margin-left: auto; margin-right: auto;">If you need to update your payment method, change your membership plan, or have any other account-related requests, our support team is here to help.</p>
+          <div class="action-buttons" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <button class="primary buttonGlow" data-action="contact-support">Contact Support</button>
+            <button class="outline buttonGlow" data-action="download-data">Download My Data</button>
+            <button class="outline" data-action="logout">Sign Out</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer intentionally left blank — footer bar removed to avoid duplication -->
+    <!-- If you want a footer later, reintroduce markup here and include styles in assets/styles.css -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer-inner">
+        <small>&copy; 2025 Fitness Club. All rights reserved.</small>
+        <div class="site-footer-credit">Built with care.</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Action Button -->
+  <div class="fab" role="navigation" aria-label="Quick actions">
+    <button class="fab-main" id="fabMain" aria-expanded="false">＋</button>
+    <div class="fab-menu" id="fabMenu" aria-hidden="true">
+      <button class="fab-item" data-action="booking" aria-label="Book session">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Book
+      </button>
+      <button class="fab-item" data-action="shop" aria-label="Shop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"/>
+          <circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+        </svg>
+        Shop
+      </button>
+      <button class="fab-item" data-action="feedback" aria-label="Send feedback">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        Feedback
+      </button>
+    </div>
+  </div>
+
+  <!-- Toasts & Cart Widget -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+  <div id="cartWidget" class="cart-widget glass-card" role="complementary" aria-label="Cart">
+    <button id="cartButton" class="cart-button" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="9" cy="21" r="1"/>
+        <circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button id="checkoutButton" class="primary small">Checkout</button>
+  </div>
+
+  <!-- CMD-style secure redirect modal -->
+  <div id="secureRedirectModal" class="cmd-modal" aria-hidden="true" style="display:none;">
+    <div class="cmd-window" role="dialog" aria-modal="true" aria-label="Secure checkout redirect">
+      <div class="cmd-header">
+        <span class="cmd-title">Secure Checkout</span>
+        <button class="cmd-close" id="secureRedirectClose">&times;</button>
+      </div>
+      <div class="cmd-content">
+        <div class="cmd-line">Initializing secure connection...</div>
+        <div class="cmd-line">Verifying payment details...</div>
+        <div class="cmd-line">Processing transaction...</div>
+        <div class="cmd-line cmd-success">✓ Payment successful!</div>
+        <div class="cmd-line">Redirecting to confirmation page...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load main app script -->
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/cart.js"></script>
+</body>
+</html>

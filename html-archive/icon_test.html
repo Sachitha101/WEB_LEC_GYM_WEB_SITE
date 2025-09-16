@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon & Animation Test</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Include SVG icons -->
+    <object type="image/svg+xml" data="assets/icons.svg" style="display: none;" aria-hidden="true"></object>
+</head>
+<body>
+    <div style="padding: 2rem; background: var(--fluent-background); min-height: 100vh;">
+        <h1 style="color: var(--fluent-text-primary); margin-bottom: 2rem;">SVG Icons & Animations Test</h1>
+
+        <!-- Icon Test Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 3rem;">
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-home"></use>
+                </svg>
+                <div>Home</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-user"></use>
+                </svg>
+                <div>User</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-calendar"></use>
+                </svg>
+                <div>Calendar</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-shop"></use>
+                </svg>
+                <div>Shop</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-dumbbell"></use>
+                </svg>
+                <div>Dumbbell</div>
+            </div>
+
+            <div class="glass-card" style="padding: 1rem; text-align: center;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 0.5rem;">
+                    <use href="#icon-feedback"></use>
+                </svg>
+                <div>Feedback</div>
+            </div>
+        </div>
+
+        <!-- Animation Test -->
+        <h2 style="color: var(--fluent-text-primary); margin-bottom: 1rem;">Animation Tests</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <!-- Hero Slide In -->
+            <div class="heroSlideIn glass-card" style="padding: 2rem; min-height: 150px;">
+                <h3>Hero Slide In Animation</h3>
+                <p>This element should slide in from the left when the page loads.</p>
+            </div>
+
+            <!-- Card Bounce -->
+            <div class="cardBounce glass-card" style="padding: 2rem; min-height: 150px;">
+                <h3>Card Bounce Animation</h3>
+                <p>This element should bounce when it appears.</p>
+            </div>
+
+            <!-- Button Glow -->
+            <div style="padding: 2rem;">
+                <button class="primary buttonGlow">Button with Glow</button>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">Hover over the button to see the glow effect.</p>
+            </div>
+
+            <!-- Widget Morph -->
+            <div class="widgetMorph glass-card" style="padding: 2rem; min-height: 150px;">
+                <h3>Widget Morph Animation</h3>
+                <p>This element should morph its shape smoothly.</p>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="glass-card" style="margin-top: 2rem; padding: 1rem; text-align: center;">
+            <p style="color: var(--fluent-text-secondary); margin: 0;">
+                If you can see the icons above and the animations are working, then the SVG integration is successful!
+            </p>
+        </div>
+    </div>
+</body>
+</html>

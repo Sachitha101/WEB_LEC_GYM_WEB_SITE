@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS fitness_db DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE fitness_db;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(191) NOT NULL,
+  email VARCHAR(191) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  age INT DEFAULT 0,
+  gender VARCHAR(32) DEFAULT NULL,
+  education JSON DEFAULT NULL,
+  country VARCHAR(128) DEFAULT NULL,
+  avatar VARCHAR(255) DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table to map OAuth providers to local users
+CREATE TABLE IF NOT EXISTS oauth_providers (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  provider VARCHAR(64) NOT NULL,
+  provider_id VARCHAR(191) NOT NULL,
+  provider_data JSON DEFAULT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY provider_user (provider, provider_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

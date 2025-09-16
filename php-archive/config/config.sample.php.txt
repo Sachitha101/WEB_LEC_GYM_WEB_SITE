@@ -1,0 +1,8 @@
+<?php
+// Copy this file to config.php and set values, or set environment variables on your host.
+// Prefer environment variables in production: DB_HOST, DB_NAME, DB_USER, DB_PASS
+
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'fitness_db');
+define('DB_USER', 'root');
+define('DB_PASS', '');

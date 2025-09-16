@@ -11,11 +11,11 @@ This configuration contains DB credentials and helper functions. Owner: DB Manag
 Voting note: changes to DB constants require DevOps/DB approval and should be reviewed before deployment.
 */
 // Database configuration using PDO
-// Update these constants for your local environment
-define('DB_HOST', '127.0.0.1');
-define('DB_NAME', 'fitness_db');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // XAMPP default is empty password
+// Prefer environment variables in production; fall back to local defaults for XAMPP
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_NAME', getenv('DB_NAME') ?: 'fitness_db');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: ''); // XAMPP default is empty password
 
 date_default_timezone_set('UTC');
 
@@ -44,24 +44,6 @@ function sanitizeInput($v) {
 }
 
 // CSRF token helpers
-function generate_csrf_token() {
-    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-    if (empty($_SESSION['csrf_token'])) {
-        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    }
-    return $_SESSION['csrf_token'];
-}
-
-function validate_csrf_token($token) {
-    if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-    return isset($_SESSION['csrf_token']) && hash_equals($_SESSION['csrf_token'], $token);
-}
-
-<?php
-function sanitizeInput($v) {
-    return trim(htmlspecialchars($v, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'));
-}
-
 function generate_csrf_token() {
     if (session_status() !== PHP_SESSION_ACTIVE) session_start();
     if (empty($_SESSION['csrf_token'])) {

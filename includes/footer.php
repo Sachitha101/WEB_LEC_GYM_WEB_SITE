@@ -1,0 +1,10 @@
+<?php
+// Footer intentionally left blank — footer bar removed to avoid duplication
+// If you want a footer later, reintroduce markup here and include styles in assets/styles.css
+?>
+<footer class="site-footer" role="contentinfo">
+	<div class="site-footer-inner">
+		<small>&copy; <?php echo date('Y'); ?> Fitness Club. All rights reserved.</small>
+		<div class="site-footer-credit">Built with care.</div>
+	</div>
+</footer>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — Fitness Club</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <!-- Inline header (from includes/header.php) -->
+  <header class="fluent-navbar" role="banner">
+    <div class="navbar-container">
+      <button class="hamburger-btn" id="hamburgerToggle" aria-label="Toggle navigation menu" aria-expanded="false"></button>
+      <div class="brand-section"><div class="brand-logo"></div><span class="brand-text">Fitness Club</span></div>
+      <nav class="desktop-nav" id="desktopNav" role="navigation" aria-label="Main navigation">
+        <a href="index.html#home" class="nav-item" data-section="home" aria-label="Home">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-home"></use></svg>
+          <span class="nav-label">Home</span>
+        </a>
+        <a href="index.html#membership" class="nav-item" data-section="membership" aria-label="Membership">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-membership"></use></svg>
+          <span class="nav-label">Membership</span>
+        </a>
+        <a href="index.html#booking" class="nav-item" data-section="booking" aria-label="Booking">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-calendar"></use></svg>
+          <span class="nav-label">Booking</span>
+        </a>
+        <a href="index.html#shop" class="nav-item" data-section="shop" aria-label="Shop">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-shop"></use></svg>
+          <span class="nav-label">Shop</span>
+        </a>
+        <a href="index.html#powerzone" class="nav-item" data-section="powerzone" aria-label="PowerZone">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-powerzone"></use></svg>
+          <span class="nav-label">PowerZone</span>
+        </a>
+        <a href="index.html#news" class="nav-item" data-section="news" aria-label="News">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-news"></use></svg>
+          <span class="nav-label">News</span>
+        </a>
+        <a href="index.html#franchise" class="nav-item" data-section="franchise" aria-label="Franchise">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-franchise"></use></svg>
+          <span class="nav-label">Franchise</span>
+        </a>
+        <a href="index.html#feedback" class="nav-item" data-section="feedback" aria-label="Feedback">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-feedback"></use></svg>
+          <span class="nav-label">Feedback</span>
+        </a>
+        <a href="index.html#account" class="nav-item" data-section="account" aria-label="Account">
+          <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-user"></use></svg>
+          <span class="nav-label">Account</span>
+        </a>
+      </nav>
+      <div class="navbar-right"><div class="digital-clock" id="digitalClock" aria-live="polite"><span class="clock-time">--:--:--</span> <span class="clock-date">Loading...</span></div></div>
+      <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true"></div>
+    </div>
+  </header>
+
+  <div class="login-page" style="background: linear-gradient(135deg, var(--fluent-bg-primary) 0%, var(--fluent-bg-secondary) 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <div class="login-wrapper" style="max-width: 900px; width: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); overflow: hidden; transform: translateY(20px); opacity: 0; animation: slideUpFade 0.8s ease-out forwards;">
+      <div class="login-card glass-card" role="region" aria-labelledby="signin-heading" style="background: transparent; border: none; box-shadow: none;">
+        <div class="split login-split" style="display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; min-height: 500px;">
+          <div class="login-col login-col--left" style="padding: 3rem; display: flex; flex-direction: column; justify-content: center;">
+            <div class="login-header" style="text-align: center; margin-bottom: 2rem;">
+              <div class="avatar-display" aria-hidden="true" style="font-size: 4rem; margin-bottom: 1rem; filter: drop-shadow(0 4px 8px rgba(0,194,255,0.3)); animation: float 3s ease-in-out infinite;">🤖</div>
+              <h2 id="signin-heading" style="color: var(--fluent-text-primary); font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Welcome back</h2>
+              <p class="muted" style="color: var(--fluent-text-secondary); font-size: 1.1rem;">Sign in to continue to Fitness Club</p>
+            </div>
+
+            <form id="loginForm" style="display: flex; flex-direction: column; gap: 1.5rem;">
+              <div class="form-group">
+                <label for="email" style="color: var(--fluent-text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Email</label>
+                <input id="email" name="email" type="email" required autocomplete="email" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 1rem; color: var(--fluent-text-primary); font-size: 1rem; width: 100%; transition: all 0.3s ease; backdrop-filter: blur(10px);" placeholder="Enter your email" />
+              </div>
+
+              <div class="form-group">
+                <label for="password" style="color: var(--fluent-text-primary); font-weight: 600; margin-bottom: 0.5rem; display: block;">Password</label>
+                <input id="password" name="password" type="password" required minlength="6" autocomplete="current-password" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 1rem; color: var(--fluent-text-primary); font-size: 1rem; width: 100%; transition: all 0.3s ease; backdrop-filter: blur(10px);" placeholder="Enter your password" />
+                <div id="pwdStrength" class="muted" aria-live="polite" style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--fluent-text-secondary);">Strength: 🤔</div>
+              </div>
+
+              <div class="login-actions" style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <button class="primary" type="submit" style="background: linear-gradient(135deg, var(--fluent-accent-primary), var(--fluent-accent-secondary)); border: none; border-radius: 12px; padding: 1rem 2rem; color: white; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,194,255,0.3); flex: 1; margin-right: 1rem;">Sign In</button>
+                <a href="#" class="ghost login-forgot" style="color: var(--fluent-accent-primary); text-decoration: none; font-weight: 500; transition: all 0.3s ease;">Forgot?</a>
+              </div>
+              <div id="loginPageMsg" style="text-align:center;"></div>
+            </form>
+          </div>
+
+          <div class="login-sep" aria-hidden="true" style="background: linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1)); width: 1px; margin: 2rem 0;"></div>
+
+          <aside class="login-col login-col--right" aria-labelledby="create-heading" style="padding: 3rem; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));">
+            <h3 id="create-heading" style="color: var(--fluent-text-primary); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; text-align: center;">Continue with</h3>
+            <p class="muted" style="color: var(--fluent-text-secondary); text-align: center; margin-bottom: 2rem; font-size: 1rem;">Or continue with one of the providers below</p>
+            <div class="oauth-list" style="display: flex; flex-direction: column; gap: 1rem;">
+              <button type="button" class="oauth microsoft-oauth" id="microsoft-oauth">Microsoft</button>
+              <button type="button" class="oauth google-oauth" id="google-oauth">Google</button>
+              <button type="button" class="oauth apple-oauth" id="apple-oauth">Apple</button>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+              <a href="create_account.html" class="ghost" id="showSignupLink" style="color: var(--fluent-accent-primary); text-decoration: none; font-weight: 500; transition: all 0.3s ease; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.75rem 1.5rem; display:inline-block;">Create Account</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/api-shim.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/dev-seed.js"></script>
+  <script src="assets/js/login.js"></script>
+
+  <!-- Boot / CMD style overlay used after successful login -->
+  <div id="bootOverlay" class="boot-overlay" role="dialog" aria-hidden="true" aria-label="Boot sequence">
+    <div class="boot-panel">
+      <div class="boot-header">Fitness Club • Secure Boot</div>
+      <pre id="cmdOutput" class="boot-cmd" aria-live="polite"></pre>
+      <div class="boot-progress">
+        <div id="bootProgressFill" class="boot-progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

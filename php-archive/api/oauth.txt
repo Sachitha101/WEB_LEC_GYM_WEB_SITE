@@ -1,0 +1,58 @@
+<?php
+/*
+Project Roles (Vote to assign):
+1. Authentication & Security Lead
+2. API Integration Specialist
+3. Backend Developer (PHP)
+4. DevOps & Deployment
+5. Documentation & Support
+
+OAuth-specific file: Auth Lead + API Specialist should own this.
+Voting note: OAuth changes require security review and at least one QA test.
+*/
+// Demo OAuth endpoints (DEMO ONLY)
+// Usage:
+//  - /api/oauth.php?provider=google&action=start  -> simulates redirect to provider
+//  - /api/oauth.php?provider=google&action=callback -> simulates provider callback and logs user in
+
+session_start();
+require_once __DIR__ . '/../config/config.php';
+
+$provider = $_GET['provider'] ?? '';
+$action = $_GET['action'] ?? 'start';
+
+function json($data){ header('Content-Type: application/json'); echo json_encode($data); exit; }
+
+if (!$provider) {
+    http_response_code(400);
+    json(['success'=>false,'message'=>'Missing provider']);
+}
+
+// Simulate starting OAuth: return a URL (in real app you'd redirect to provider)
+if ($action === 'start'){
+    // For demo: respond with a local callback URL to simulate provider behavior
+    $callback = sprintf('/fitness_win11/api/oauth.php?provider=%s&action=callback', urlencode($provider));
+    json(['success'=>true,'redirect'=> $callback, 'note' => 'Demo: redirect to callback to complete flow']);
+}
+
+if ($action === 'callback'){
+    // Simulate provider giving us user info
+    $demoUsers = [
+      'google' => ['name'=>'Google User','email'=>'google-user@example.com'],
+      'microsoft' => ['name'=>'Microsoft User','email'=>'ms-user@example.com'],
+      'facebook' => ['name'=>'Facebook User','email'=>'fb-user@example.com']
+    ];
+    $u = $demoUsers[$provider] ?? ['name'=>'Demo User','email'=>'demo@example.com'];
+
+    // Create or find user in DB — for demo we'll set session only
+    $_SESSION['user_id'] = 'demo-' . $provider . '-' . time();
+    $_SESSION['user_name'] = $u['name'];
+    $_SESSION['user_email'] = $u['email'];
+
+    // Redirect back to app home
+    header('Location: /fitness_win11/index.php');
+    exit;
+}
+
+http_response_code(400);
+json(['success'=>false,'message'=>'Unknown action']);

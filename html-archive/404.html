@@ -1,0 +1,23 @@
+<!-- GitHub Pages fallback: copy of index.html for deep links -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fitness Club — Premium Gym</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <!-- Include the same static shell as index.html -->
+  <script>
+    // Redirect any deep path to root index.html while preserving hash
+    if (location.pathname && !location.pathname.endsWith('/index.html')) {
+      const hash = location.hash || '';
+      location.replace('./index.html' + hash);
+    }
+  </script>
+  <noscript>
+    <p>Page not found. Go to <a href="index.html">Home</a>.</p>
+  </noscript>
+</body>
+<html>
