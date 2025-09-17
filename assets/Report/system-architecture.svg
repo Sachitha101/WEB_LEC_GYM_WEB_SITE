@@ -1,0 +1,48 @@
+<!-- filepath suggestion: assets/report/auth-flow.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680">
+  <defs>
+    <style>
+      .t{font:700 26px Segoe UI, Arial; fill:#0b1220}
+      .b{fill:#ffffff; fill-opacity:.85; stroke:#94a3b8; rx:14}
+      .l{font:600 16px Segoe UI, Arial; fill:#0b1220}
+      .m{font:500 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill:#0b1220}
+      .a{stroke:#64748b; stroke-width:2; marker-end:url(#m1)}
+      .tag{font:600 13px Segoe UI, Arial; fill:#0369a1}
+      .ok{fill:#10b981}.warn{fill:#f59e0b}.err{fill:#ef4444}
+    </style>
+    <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <text x="40" y="50" class="t">Authentication Flow</text>
+
+  <rect x="60" y="90" width="320" height="150" class="b"/>
+  <text x="80" y="120" class="l">User</text>
+  <text x="80" y="150" class="m">• Login form (email/password)</text>
+  <text x="80" y="175" class="m">• OAuth modal (Microsoft/Google/Facebook)</text>
+
+  <rect x="460" y="90" width="320" height="150" class="b"/>
+  <text x="480" y="120" class="l">Web App (PHP)</text>
+  <text x="480" y="150" class="m">• index.php → pages/login.php</text>
+  <text x="480" y="175" class="m">• JS posts → /api/auth.php</text>
+
+  <rect x="860" y="90" width="300" height="150" class="b"/>
+  <text x="880" y="120" class="l">MySQL</text>
+  <text x="880" y="150" class="m">• users, oauth_identities, sessions</text>
+
+  <line x1="380" y1="165" x2="460" y2="165" class="a"/>
+  <line x1="780" y1="165" x2="860" y2="165" class="a"/>
+
+  <rect x="60" y="280" width="1040" height="320" class="b"/>
+  <text x="80" y="310" class="l">Steps (Email/Password)</text>
+  <text x="100" y="340" class="m">1. User submits email/password → POST /api/auth.php?action=login</text>
+  <text x="100" y="365" class="m">2. Server: lookup user by email; verify password_hash (bcrypt)</text>
+  <text x="100" y="390" class="m">3. On success: set PHP session, return JSON {ok:true, user}</text>
+  <text x="100" y="415" class="m">4. Front-end: show CMD boot animation → redirect to Home</text>
+
+  <text x="80" y="455" class="l">Steps (OAuth modal)</text>
+  <text x="100" y="485" class="m">1. User selects provider; themed modal collects email</text>
+  <text x="100" y="510" class="m">2. POST /api/auth.php?action=oauth {provider,email}</text>
+  <text x="100" y="535" class="m">3. Server: link or create user; set session; return JSON</text>
+  <text x="100" y="560" class="m">4. Front-end: show CMD boot animation → redirect to Home</text>
+</svg>
