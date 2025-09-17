@@ -152,7 +152,7 @@ Glassmorphism UI, smooth motion, and rounded corners—built with PHP, MySQL, an
 ## ⚙️ Setup and usage
 
 1. **Clone**
-   - git clone https://github.com/your-username/fitness-club.git
+   - git clone [(https://github.com/Sachitha101/WEB_LEC_GYM_WEB_SITE)](https://github.com/Sachitha101/WEB_LEC_GYM_WEB_SITE.git)
    - Place in XAMPP htdocs (e.g., C:/xampp/htdocs/fitness-club)
 
 2. **Start services**
@@ -167,7 +167,7 @@ Glassmorphism UI, smooth motion, and rounded corners—built with PHP, MySQL, an
    - Ensure PHP 8.x is enabled in XAMPP
 
 5. **Run**
-   - Visit http://localhost/fitness-club
+   - Visit http://localhost/fitness-club/index.php
 
 > Optional: Add a virtual host for cleaner URLs and cookie isolation.
 
