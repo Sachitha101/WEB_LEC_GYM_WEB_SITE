@@ -167,7 +167,7 @@ Glassmorphism UI, smooth motion, and rounded corners—built with PHP, MySQL, an
    - Ensure PHP 8.x is enabled in XAMPP
 
 5. **Run**
-   - Visit http://localhost/fitness-club/index.php
+   - Visit http://localhost/WEB_LEC_GYM_WEB_SITE-main/index.php
 
 > Optional: Add a virtual host for cleaner URLs and cookie isolation.
 
