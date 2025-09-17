@@ -1847,7 +1847,57 @@ button:focus, input:focus, select:focus, textarea:focus, .card:focus, .widget:fo
   border: 1px solid rgba(0,0,0,0.08);
   color: #0b1220; /* dark text for clarity on light backgrounds */
 }
+.provider-modal .modal-header h3{color: #081226; font-weight:700}
+.provider-modal .prov-note{color:rgba(12,20,34,0.7)}
+.provider-modal input{background: rgba(255,255,255,0.92); border:1px solid rgba(12,20,34,0.06); color:#0b1220}
+.provider-modal .ghost{background:transparent; border:1px solid rgba(12,20,34,0.08); color:#0b1220}
+.provider-modal .primary{background:linear-gradient(90deg,var(--accent-2),var(--accent)); color:white; box-shadow:0 8px 22px rgba(0,99,177,0.12)}
 
+/* Feedback modal tweaks */
+#feedbackModal .modal-content{max-width:560px}
+.sentiment .emoji-btn{font-size:22px; padding:6px 8px}
+
+/* Dark theme overrides to preserve contrast */
+:root.dark .modal{background: rgba(0,0,0,0.56);} 
+:root.dark .provider-modal .modal-content{ background: linear-gradient(180deg, #0b1220, rgba(6,10,18,0.6)); border:1px solid rgba(255,255,255,0.04); color: #e6eef9 }
+:root.dark .provider-modal input{background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04); color:#e6eef9}
+:root.dark .provider-modal .ghost{color:#e6eef9; border:1px solid rgba(255,255,255,0.06)}
+:root.dark .provider-modal .primary{background:linear-gradient(90deg,#00a6ff,#0063b1); color:white}
+
+/* Focus & high-contrast outlines */
+.provider-modal input:focus{box-shadow:0 0 0 4px rgba(0,120,212,0.18); border-color:rgba(0,120,212,0.28)}
+.provider-modal .modal-close{color:rgba(12,20,34,0.6)}
+:root.dark .provider-modal .modal-close{color:rgba(230,236,244,0.7)}
+
+/* Section Navigation Transitions */
+.section {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.section.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInSection 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInSection {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced section transitions for better UX */
+.section-transitioning {
+  pointer-events: none;
+}
 
 /* Notifications (fixed dropdown so it's not clipped by mica-shell overflow) */
 .notification-btn {
