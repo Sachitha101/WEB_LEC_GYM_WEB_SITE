@@ -147,7 +147,7 @@
 
 ## Visual diagrams
 
-> These diagrams reflect the current tables exactly (no schema changes). The first is a Mermaid ER diagram that renders in VS Code/GitHub markdown preview. The second mirrors the existing Graphviz DOT in `data/erd.dot`.
+> These diagrams reflect the current tables exactly. The first is a Mermaid ER diagram that renders in VS Code/GitHub markdown preview. The second mirrors the existing Graphviz DOT in `data/erd.dot`.
 
 ### Relationship diagram (Mermaid)
 
@@ -454,3 +454,4 @@ Notes:
 - Keep using prepared statements and proper transactions around checkout (creating orders and items).
 - Maintain indexes on foreign keys and frequently filtered columns (e.g., `user_sessions.expires_at`, `orders.user_id`, `order_items.order_id`).
 - The Mermaid diagram is for visualization only and does not change your schema.
+
