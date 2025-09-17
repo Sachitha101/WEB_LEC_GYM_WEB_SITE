@@ -50,32 +50,99 @@ Glassmorphism UI, smooth motion, and rounded corners—built with PHP, MySQL, an
 
 ```text
 /
+├─ index.php
 ├─ api/
-│  ├─ auth.php
 │  ├─ account.php
-│  └─ feedback.php
+│  ├─ auth.php
+│  ├─ feedback.php
+│  └─ oauth.php
 ├─ assets/
-│  ├─ css/               # Glass/mica styles, tokens, utilities
-│  ├─ js/
-│  │  ├─ app.js          # Global UI, theming, nav, dialogs
-│  │  ├─ cart.js         # Cart state & checkout modal
-│  │  ├─ create_account.js
-│  │  └─ login.js
-│  └─ images/
+│  ├─ styles.css
+│  └─ js/
+│     ├─ api-shim.js
+│     ├─ app.js
+│     ├─ cart.js
+│     ├─ checkout.js
+│     ├─ create_account.js
+│     ├─ db.js
+│     ├─ dev-seed.js
+│     ├─ feedback.js
+│     ├─ login.js
+│     └─ Report/
+│        ├─ build-report.ps1
+│        └─ report.md
+├─ config/
+│  ├─ config.php
+│  └─ config.sample.php
+├─ data/
+│  ├─ erd.dot
+│  └─ schema.md
+├─ html-archive/
+│  ├─ 404.html
+│  ├─ checkout.html
+│  ├─ create_account.html
+│  ├─ icon_test.html
+│  ├─ index.html
+│  ├─ login.html
+│  └─ responsive_test.html
+├─ images/
 ├─ includes/
-│  ├─ init.php           # Sessions, config, helpers
-│  ├─ header.php         # App bar, nav, theme toggle
-│  └─ footer.php         # Footer, modals, scripts
+│  ├─ footer.php
+│  ├─ header.php
+│  └─ init.php
+├─ pages/
+│  ├─ account.php
+│  ├─ booking.php
+│  ├─ checkout.php
+│  ├─ create_account.php
+│  ├─ feedback.php
+│  ├─ franchise.php
+│  ├─ home.php
+│  ├─ login.php
+│  ├─ membership.php
+│  ├─ news.php
+│  ├─ powerzone.php
+│  └─ shop.php
+├─ php-archive/
+│  ├─ api_account.php.txt
+│  ├─ api_auth.php.txt
+│  ├─ api_feedback.php.txt
+│  ├─ api_oauth.php.txt
+│  ├─ checkout.php.txt
+│  ├─ create_account.php.txt
+│  ├─ includes_footer.php.txt
+│  ├─ includes_header.php.txt
+│  ├─ includes_init.php.txt
+│  ├─ index.php.txt
+│  ├─ login.php.txt
+│  ├─ README.txt
+│  ├─ api/
+│  │  ├─ account.php.txt
+│  │  ├─ auth.php.txt
+│  │  ├─ feedback.txt
+│  │  └─ oauth.txt
+│  ├─ config/
+│  │  ├─ config.php.txt
+│  │  └─ config.sample.php.txt
+│  └─ includes/
+│     ├─ footer.txt
+│     ├─ header.txt
+│     └─ init.php.txt
 ├─ sql/
-│  └─ database.sql       # Tables, seed data
-├─ index.php             # Home dashboard
-├─ membership.php
-├─ booking.php
-├─ shop.php
-├─ gallery.php
-├─ feedback.php
-├─ login.php
-└─ create_account.php
+│  └─ database.sql
+├─ tools/
+│  ├─ apply_avatar_migration.php
+│  ├─ apply_schema_migration.php
+│  ├─ cli_signup_test.php
+│  ├─ cookies_cli.txt
+│  ├─ export_erd_dot.php
+│  ├─ export_schema.php
+│  ├─ import_sql.php
+│  ├─ migrate.php
+│  ├─ setup_database.php
+│  ├─ test_auth_flow.php
+│  └─ test_db.php
+└─ uploads/
 ```
 
 > Keep UI pieces atomic: cards, chips, pills, command bars, and modal sheets for consistency.
