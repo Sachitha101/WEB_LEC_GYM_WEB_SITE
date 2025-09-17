@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .bg { fill: #ffffff; }
+      .fg { fill: #0b1220; }
+      @media (prefers-color-scheme: dark) {
+        .bg { fill: #0b1220; }
+        .fg { fill: #ffffff; }
+      }
+    </style>
+  </defs>
+  <!-- Rounded background to read well at small sizes -->
+  <rect class="bg" x="2" y="2" width="60" height="60" rx="14"/>
+  <!-- Minimal dumbbell mark (fitness) -->
+  <g transform="translate(12,20)">
+    <rect class="fg" x="0" y="8" width="10" height="8" rx="2"/>
+    <rect class="fg" x="10" y="10" width="20" height="4" rx="2"/>
+    <rect class="fg" x="30" y="8" width="10" height="8" rx="2"/>
+  </g>
+</svg>

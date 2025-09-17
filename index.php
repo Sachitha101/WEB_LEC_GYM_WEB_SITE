@@ -23,6 +23,11 @@ $userEmail = $_SESSION['user_email'] ?? '';
   <title>Fitness Club — Premium Gym</title>
   <link rel="stylesheet" href="assets/styles.css">
   <meta name="description" content="Fitness Club — membership, trainer booking, shop, and feedback. Windows 11 inspired UI." />
+    <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=1">
+        <link rel="alternate icon" href="assets/favicon.svg?v=1">
+    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
   <!-- Include SVG icons -->
   <object type="image/svg+xml" data="assets/icons.svg" style="display: none;" aria-hidden="true"></object>
