@@ -92,7 +92,12 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(128 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn" 
+    data-product-id="prod-shaker"
+    data-product-name="Premium Protein Shaker"
+    data-product-price="24.99"
+    data-product-category="accessories"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
 
@@ -129,7 +134,12 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(342 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn"
+    data-product-id="prod-whey"
+    data-product-name="Premium Whey Protein"
+    data-product-price="49.99"
+    data-product-category="supplements"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
 
@@ -166,7 +176,12 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(89 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn"
+    data-product-id="prod-dumbbells"
+    data-product-name="Adjustable Dumbbells"
+    data-product-price="199.99"
+    data-product-category="equipment"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
 
@@ -201,7 +216,12 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(156 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn"
+    data-product-id="prod-yogamat"
+    data-product-name="Premium Yoga Mat"
+    data-product-price="39.99"
+    data-product-category="equipment"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
 
@@ -236,7 +256,12 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(203 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn"
+    data-product-id="prod-bands"
+    data-product-name="Resistance Bands Set"
+    data-product-price="29.99"
+    data-product-category="equipment"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
 
@@ -271,49 +296,17 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
           </div>
           <span style="color: var(--fluent-text-secondary); font-size: 0.9rem;">(287 reviews)</span>
         </div>
-        <button class="primary buttonGlow" style="width: 100%;">Add to Cart</button>
+  <button class="primary buttonGlow add-to-cart-btn"
+    data-product-id="prod-shirt"
+    data-product-name="Performance T-Shirt"
+    data-product-price="19.99"
+    data-product-category="apparel"
+    style="width: 100%;">Add to Cart</button>
       </div>
     </div>
   </div>
 
-  <!-- Shopping Cart Summary -->
-  <div class="cart-summary glass-card widgetMorph" style="padding: 2rem; margin-bottom: 2rem;">
-    <h2 style="margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px;">
-        <circle cx="9" cy="21" r="1"/>
-        <circle cx="20" cy="21" r="1"/>
-        <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-      </svg>
-      Shopping Cart
-    </h2>
-
-    <div class="cart-items" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
-      <div class="cart-empty" style="text-align: center; padding: 3rem; color: var(--fluent-text-secondary);">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
-        <h3 style="margin-bottom: 0.5rem;">Your cart is empty</h3>
-        <p>Add some products to get started!</p>
-      </div>
-    </div>
-
-    <div class="cart-total" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
-      <div class="total-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-        <span>Subtotal:</span>
-        <span style="font-weight: 600;">$0.00</span>
-      </div>
-      <div class="total-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-        <span>Shipping:</span>
-        <span style="font-weight: 600;">$0.00</span>
-      </div>
-      <div class="total-row" style="display: flex; justify-content: space-between; align-items: center; font-size: 1.2rem; font-weight: 700; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; margin-top: 1rem;">
-        <span>Total:</span>
-        <span style="color: var(--fluent-accent-primary);">$0.00</span>
-      </div>
-    </div>
-
-    <button class="primary large buttonGlow" style="width: 100%; margin-top: 1.5rem;" disabled>
-      Proceed to Checkout
-    </button>
-  </div>
+  <!-- Cart summary removed per request -->
 </section>
 
 <script>
@@ -338,7 +331,7 @@ document.querySelectorAll('.category-btn').forEach(btn => {
     });
 });
 
-// Add to cart functionality
+// Add to cart notification (cart UI removed here)
 document.querySelectorAll('.product-card button').forEach(btn => {
     btn.addEventListener('click', function() {
         const productCard = this.closest('.product-card');
@@ -347,24 +340,8 @@ document.querySelectorAll('.product-card button').forEach(btn => {
 
         // Show notification
         showNotification(`${productName} added to cart!`, 'success');
-
-        // Here you would typically update the cart in your backend
-        updateCartDisplay();
     });
 });
-
-function updateCartDisplay() {
-    // This would update the cart summary with actual cart data
-    // For now, just show a placeholder
-    const cartEmpty = document.querySelector('.cart-empty');
-    if (cartEmpty) {
-        cartEmpty.innerHTML = `
-            <div style="font-size: 3rem; margin-bottom: 1rem;">🛒</div>
-            <h3 style="margin-bottom: 0.5rem;">Items in your cart</h3>
-            <p>Checkout when you're ready!</p>
-        `;
-    }
-}
 
 function showNotification(message, type = 'info') {
     const notification = document.createElement('div');

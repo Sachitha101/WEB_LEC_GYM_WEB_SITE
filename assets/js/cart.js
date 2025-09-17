@@ -16,6 +16,8 @@ class ShoppingCartManager {
     this.bindEvents();
     this.updateCartDisplay();
     this.setupCartPersistence();
+    // Attempt a server sync on init (no-op for guests)
+    this.syncCartWithServer();
   }
 
   bindEvents() {
@@ -175,6 +177,10 @@ class ShoppingCartManager {
 
   saveCart() {
     localStorage.setItem(this.cartKey, JSON.stringify(this.cart));
+    // Notify other tabs and listeners
+    window.dispatchEvent(new CustomEvent('cart:updated'));
+    // Persist to server if logged in (no-op if not)
+    this.saveCartToServer();
   }
 
   loadCart() {
@@ -191,6 +197,22 @@ class ShoppingCartManager {
       console.error('Failed to load cart:', error);
       this.cart = [];
     }
+  }
+
+  // Listen for cross-tab updates
+  startRealtimeUpdates() {
+    window.addEventListener('storage', (e) => {
+      if (e.key === this.cartKey && e.newValue) {
+        try {
+          this.cart = JSON.parse(e.newValue) || [];
+          this.updateCartDisplay();
+        } catch (_) { /* ignore */ }
+      }
+    });
+    window.addEventListener('cart:updated', () => {
+      // Another component on the same page triggered an update
+      this.updateCartDisplay();
+    });
   }
 
   setupCartPersistence() {
@@ -490,8 +512,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize cart for pages that need it
   if (document.querySelector('.cart-container') ||
       document.querySelector('.add-to-cart-btn') ||
-      document.querySelector('.cart-sidebar')) {
+      document.querySelector('.cart-sidebar') ||
+      document.querySelector('.choose-plan-btn')) {
     window.shoppingCart = new ShoppingCartManager();
+    window.shoppingCart.startRealtimeUpdates();
   }
 });
 

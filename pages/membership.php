@@ -69,9 +69,9 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
       </div>
 
       <div class="plan-action">
-        <a href="?page=checkout&plan=basic" class="primary large buttonGlow" style="width: 100%; text-align: center; display: block;">
+        <button class="primary large buttonGlow choose-plan-btn" data-tier="basic" data-price="29" style="width: 100%; text-align: center; display: block;">
           Choose Basic Plan
-        </a>
+        </button>
       </div>
     </div>
 
@@ -128,9 +128,9 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
       </div>
 
       <div class="plan-action">
-        <a href="?page=checkout&plan=premium" class="primary large buttonGlow" style="width: 100%; text-align: center; display: block;">
+        <button class="primary large buttonGlow choose-plan-btn" data-tier="premium" data-price="59" style="width: 100%; text-align: center; display: block;">
           Choose Premium Plan
-        </a>
+        </button>
       </div>
     </div>
 
@@ -185,9 +185,9 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
       </div>
 
       <div class="plan-action">
-        <a href="?page=checkout&plan=elite" class="primary large buttonGlow" style="width: 100%; text-align: center; display: block;">
+        <button class="primary large buttonGlow choose-plan-btn" data-tier="elite" data-price="99" style="width: 100%; text-align: center; display: block;">
           Choose Elite Plan
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -229,3 +229,94 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
     </div>
   </div>
 </section>
+<script>
+// Membership selection: persist to DB (if logged in), update UI, and add to cart without redirect
+(function(){
+  const isLoggedIn = <?php echo json_encode($isLoggedIn); ?>;
+  function ucfirst(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+  async function saveTierServer(tier){
+    try {
+      const res = await fetch('api/membership.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ tier })
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.message || 'Failed to save tier');
+      return data.data?.tier || tier;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  function applyTierClass(tier){
+    const b = document.body;
+    ['tier-basic','tier-premium','tier-elite'].forEach(c => b.classList.remove(c));
+    if (tier) b.classList.add('tier-' + tier);
+  }
+
+  function updateHeaderBadge(tier){
+    const badge = document.querySelector('.membership-badge');
+    if (badge) {
+      badge.textContent = tier ? ucfirst(tier) : '';
+      badge.style.display = tier ? 'inline-flex' : 'none';
+    }
+  }
+
+  function addMembershipToCart(tier, price){
+    if (!window.shoppingCart) return;
+    // Remove any existing membership line from cart
+    const cart = window.shoppingCart.cart || [];
+    const filtered = cart.filter(item => item.category !== 'membership');
+    window.shoppingCart.cart = filtered;
+    window.shoppingCart.saveCart();
+    // Add new membership line
+    const prod = {
+      id: 'membership-' + tier,
+      name: 'Membership - ' + ucfirst(tier),
+      price: parseFloat(price) || 0,
+      image: '',
+      category: 'membership',
+      quantity: 1
+    };
+    window.shoppingCart.addToCart(prod);
+  }
+
+  function notify(msg, type){
+    if (window.FitnessAPI && window.FitnessAPI.notifications) {
+      return window.FitnessAPI.notifications[type || 'info'](msg);
+    }
+    alert(msg);
+  }
+
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.choose-plan-btn');
+    if (!btn) return;
+    e.preventDefault();
+    const tier = btn.getAttribute('data-tier');
+    const price = btn.getAttribute('data-price');
+
+    try {
+      if (isLoggedIn) {
+        const saved = await saveTierServer(tier);
+        applyTierClass(saved);
+        updateHeaderBadge(saved);
+        notify(ucfirst(saved) + ' plan saved to your account', 'success');
+      } else {
+        notify('Plan selected. Log in to save it to your account.', 'info');
+      }
+
+      addMembershipToCart(tier, price);
+      notify(ucfirst(tier) + ' added to your order. You can complete it in Checkout.', 'success');
+
+      // Optional: visually mark selected card
+      document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+      btn.closest('.plan-card')?.classList.add('selected');
+    } catch (err) {
+      notify('Could not save plan: ' + (err?.message || err), 'error');
+    }
+  });
+})();
+</script>

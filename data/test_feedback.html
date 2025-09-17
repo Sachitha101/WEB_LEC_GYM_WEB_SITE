@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Test</title>
+</head>
+<body>
+    <h1>Testing Feedback Pages</h1>
+    <div id="test-results"></div>
+
+    <script>
+        const pages = ['feedback_feature', 'feedback_issue', 'feedback_support', 'feedback_general'];
+
+        async function testPage(page) {
+            try {
+                const response = await fetch(`http://localhost:8000/index.php?page=${page}`);
+                const html = await response.text();
+
+                // Check if section has 'active' class
+                const hasActiveClass = html.includes('class="section glass-card active"') ||
+                                     html.includes('class="section feedback active"');
+
+                // Check if form exists
+                const hasForm = html.includes('<form') && html.includes('submit');
+
+                return {
+                    page,
+                    success: response.ok,
+                    hasActiveClass,
+                    hasForm,
+                    status: response.status
+                };
+            } catch (error) {
+                return {
+                    page,
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        async function runTests() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<p>Testing feedback pages...</p>';
+
+            const results = [];
+            for (const page of pages) {
+                const result = await testPage(page);
+                results.push(result);
+            }
+
+            let html = '<h2>Test Results:</h2>';
+            results.forEach(result => {
+                html += `<div style="margin: 10px; padding: 10px; border: 1px solid #ccc;">
+                    <strong>${result.page}:</strong><br>
+                    Status: ${result.success ? '✅ OK' : '❌ Failed'}<br>
+                    Active Class: ${result.hasActiveClass ? '✅ Yes' : '❌ No'}<br>
+                    Has Form: ${result.hasForm ? '✅ Yes' : '❌ No'}<br>
+                    ${result.error ? `Error: ${result.error}` : ''}
+                </div>`;
+            });
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Run tests when page loads
+        runTests();
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">f:\XAMMP\htdocs\fitness_win11\test_feedback.html

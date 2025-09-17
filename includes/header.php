@@ -23,6 +23,11 @@
         </svg>
       </div>
       <span class="brand-text">Fitness Club</span>
+      <?php $tier = $_SESSION['membership_tier'] ?? null; ?>
+      <span class="membership-badge" style="display: <?php echo $tier? 'inline-flex':'none'; ?>; margin-left:8px; padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700; align-items:center; gap:6px; background: linear-gradient(90deg, rgba(0,194,255,0.18), rgba(14,165,201,0.14)); border:1px solid rgba(14,165,201,0.28); color: var(--accent);">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2.5 7-7-4.5L5 20l2.5-7L2 9h7z"/></svg>
+        <span><?php echo htmlspecialchars(ucfirst((string)$tier)); ?></span>
+      </span>
     </div>
 
     <!-- Desktop Navigation -->
@@ -60,6 +65,16 @@
         </svg>
         <span class="nav-label">Shop</span>
       </a>
+
+      <a href="?page=checkout" class="nav-item" data-section="checkout" aria-label="Checkout">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"/>
+          <circle cx="9" cy="20" r="1"/>
+          <circle cx="18" cy="20" r="1"/>
+        </svg>
+        <span class="nav-label">Checkout</span>
+      </a>
+
 
       <a href="?page=powerzone" class="nav-item" data-section="powerzone" aria-label="PowerZone">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -141,6 +156,12 @@
         <div class="nm-header">Notifications</div>
         <ul class="nm-list" id="notificationList"></ul>
       </div>
+
+      <?php if (!empty($_SESSION['user_id'])): ?>
+      <button class="btn btn-secondary" id="logoutBtn" aria-label="Log out">Logout</button>
+      <?php else: ?>
+      <a class="btn btn-primary" href="?page=login" aria-label="Login">Login</a>
+      <?php endif; ?>
     </div>
 
     <!-- Mobile Navigation Overlay -->
@@ -179,6 +200,16 @@
           </svg>
           <span>Shop</span>
         </a>
+
+        <a href="?page=checkout" class="mobile-nav-item" data-section="checkout">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 6h15l-1.5 9h-12z"/>
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+          </svg>
+          <span>Checkout</span>
+        </a>
+
 
         <a href="?page=powerzone" class="mobile-nav-item" data-section="powerzone">
           <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -258,5 +289,21 @@
   window.addEventListener('resize', ()=>{ if (menu.classList.contains('show')) positionMenu(); });
   window.addEventListener('scroll', ()=>{ if (menu.classList.contains('show')) positionMenu(); }, true);
   document.addEventListener('click', (e)=>{ if (!menu.contains(e.target) && e.target !== btn) closeMenu(); });
+})();
+
+// Lightweight logout handler
+(function(){
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (!logoutBtn) return;
+  logoutBtn.addEventListener('click', async () => {
+    try {
+      const res = await fetch('api/auth.php?action=logout', { method: 'POST' });
+      // ignore response body; redirect to home
+    } catch (e) {
+      // no-op
+    } finally {
+      window.location.assign('?page=home');
+    }
+  });
 })();
 </script>

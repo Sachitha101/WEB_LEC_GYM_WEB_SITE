@@ -238,20 +238,27 @@ if (!$isLoggedIn) {
 
 <script>
 // Booking form handling
-document.getElementById('bookingForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-    const bookingData = Object.fromEntries(formData);
-
-    // Show confirmation
-    showNotification('Session booked successfully! You will receive a confirmation email shortly.', 'success');
-
-    // Clear form
-    this.reset();
-
-    // Here you would typically send the data to your backend API
-    console.log('Booking data:', bookingData);
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const formData = new FormData(this);
+  const bookingData = Object.fromEntries(formData);
+  try {
+    const res = await fetch('api/booking.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData),
+      credentials: 'include'
+    });
+    const out = await res.json();
+    if (out.success) {
+      showNotification('Session booked successfully! Reference #' + (out.data?.id || ''), 'success');
+      this.reset();
+    } else {
+      showNotification(out.message || 'Failed to book session', 'error');
+    }
+  } catch (err) {
+    showNotification('Network error while booking', 'error');
+  }
 });
 
 function clearBookingForm() {
@@ -259,30 +266,32 @@ function clearBookingForm() {
 }
 
 function showNotification(message, type = 'info') {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? 'var(--fluent-accent-primary)' : 'var(--fluent-accent-secondary)'};
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        z-index: 1000;
-        animation: slideInRight 0.3s ease-out;
-        max-width: 400px;
-    `;
-    notification.textContent = message;
+  // Create notification element positioned below the fixed navbar
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.setAttribute('role', 'alert');
+  notification.setAttribute('aria-live', 'polite');
+  notification.style.cssText = `
+    position: fixed;
+    top: calc(var(--navbar-height, 56px) + 16px);
+    right: 20px;
+    background: ${type === 'success' ? 'var(--fluent-accent-primary)' : 'var(--fluent-accent-secondary)'};
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    z-index: 1600;
+    animation: slideInRight 0.3s ease-out;
+    max-width: 400px;
+  `;
+  notification.textContent = message;
 
-    document.body.appendChild(notification);
+  document.body.appendChild(notification);
 
-    // Remove after 5 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease-in';
-        setTimeout(() => notification.remove(), 300);
-    }, 5000);
+  // Remove after 5 seconds
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease-in';
+    setTimeout(() => notification.remove(), 300);
+  }, 5000);
 }
 </script>

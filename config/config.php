@@ -11,11 +11,31 @@ This configuration contains DB credentials and helper functions. Owner: DB Manag
 Voting note: changes to DB constants require DevOps/DB approval and should be reviewed before deployment.
 */
 // Database configuration using PDO
-// Prefer environment variables in production; fall back to local defaults for XAMPP
-define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
-define('DB_NAME', getenv('DB_NAME') ?: 'fitness_db');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: ''); // XAMPP default is empty password
+// Auto-switch to local DB when running on localhost/CLI or when APP_ENV=local
+$serverName = $_SERVER['SERVER_NAME'] ?? '';
+$remoteAddr = $_SERVER['REMOTE_ADDR'] ?? '';
+$isLocalEnv = (getenv('APP_ENV') === 'local')
+    || (PHP_SAPI === 'cli')
+    || ($serverName === 'localhost')
+    || ($remoteAddr === '127.0.0.1')
+    || ($remoteAddr === '::1');
+
+if ($isLocalEnv) {
+    // Local XAMPP defaults (override with env vars if set)
+    define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+    define('DB_PORT', getenv('DB_PORT') ?: '3306');
+    // Use same DB name locally unless overridden
+    define('DB_NAME', getenv('DB_NAME') ?: 'fitness_db');
+    define('DB_USER', getenv('DB_USER') ?: 'root');
+    define('DB_PASS', getenv('DB_PASS') ?: ''); // XAMPP default empty
+} else {
+    // Hosting defaults (InfinityFree) — can be overridden via env vars
+    define('DB_HOST', getenv('DB_HOST') ?: 'sql204.infinityfree.com');
+    define('DB_PORT', getenv('DB_PORT') ?: '3306');
+    define('DB_NAME', getenv('DB_NAME') ?: 'if0_39961734_fitness_db');
+    define('DB_USER', getenv('DB_USER') ?: 'if0_39961734');
+    define('DB_PASS', getenv('DB_PASS') ?: 'iYAerzEaNfDUgd');
+}
 
 date_default_timezone_set('UTC');
 
@@ -24,7 +44,8 @@ function connectDB() {
     static $pdo = null;
     if ($pdo !== null) return $pdo;
 
-    $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4';
+    $port = defined('DB_PORT') ? DB_PORT : '3306';
+    $dsn = 'mysql:host=' . DB_HOST . ';port=' . $port . ';dbname=' . DB_NAME . ';charset=utf8mb4';
     try {
         $pdo = new PDO($dsn, DB_USER, DB_PASS, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

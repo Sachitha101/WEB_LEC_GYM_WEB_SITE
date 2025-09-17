@@ -5,7 +5,7 @@ require_once 'includes/init.php';
 $page = $_GET['page'] ?? 'home';
 
 // Validate page parameter to prevent directory traversal
-$allowedPages = ['home', 'membership', 'booking', 'shop', 'powerzone', 'news', 'franchise', 'feedback', 'account', 'login', 'create_account', 'checkout'];
+$allowedPages = ['home', 'membership', 'booking', 'shop', 'powerzone', 'news', 'franchise', 'feedback', 'feedback_feature', 'feedback_general', 'feedback_support', 'feedback_issue', 'account', 'login', 'create_account', 'checkout'];
 if (!in_array($page, $allowedPages)) {
     $page = 'home';
 }
@@ -21,7 +21,17 @@ $userEmail = $_SESSION['user_email'] ?? '';
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Fitness Club — Premium Gym</title>
-  <link rel="stylesheet" href="assets/styles.css">
+    <!-- Apply theme ASAP to avoid white flash -->
+    <script>
+        (function(){
+            try{
+                var saved = localStorage.getItem('theme');
+                var isDark = saved ? saved === 'dark' : true; // default to dark
+                document.documentElement.classList.toggle('dark', isDark);
+            }catch(e){ document.documentElement.classList.add('dark'); }
+        })();
+    </script>
+    <link rel="stylesheet" href="assets/styles.css">
   <meta name="description" content="Fitness Club — membership, trainer booking, shop, and feedback. Windows 11 inspired UI." />
     <!-- Favicon -->
         <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=1">
@@ -40,11 +50,12 @@ $userEmail = $_SESSION['user_email'] ?? '';
   <script type="module" src="assets/js/db.js"></script>
   <script type="module" src="assets/js/api-shim.js"></script>
   <script type="module" src="assets/js/feedback.js"></script>
+    <script type="module" src="assets/js/cart.js"></script>
+    <script type="module" src="assets/js/reveal.js"></script>
 </head>
-<body>
-  <div class="win11-shell mica-shell" role="application" aria-label="Fitness Club main shell">
+<body class="<?php echo isset($_SESSION['membership_tier']) ? 'tier-' . htmlspecialchars($_SESSION['membership_tier']) : ''; ?>">
     <?php include 'includes/header.php'; ?>
-
+          
     <main class="right-panel" style="flex:1;">
       <?php
       // Include the appropriate page content
@@ -73,6 +84,18 @@ $userEmail = $_SESSION['user_email'] ?? '';
           case 'feedback':
               include 'pages/feedback.php';
               break;
+          case 'feedback_feature':
+              include 'pages/feedback_feature.php';
+              break;
+          case 'feedback_general':
+              include 'pages/feedback_general.php';
+              break;
+          case 'feedback_support':
+              include 'pages/feedback_support.php';
+              break;
+          case 'feedback_issue':
+              include 'pages/feedback_issue.php';
+              break;
           case 'account':
               include 'pages/account.php';
               break;
@@ -93,7 +116,6 @@ $userEmail = $_SESSION['user_email'] ?? '';
     </main>
 
     <?php include 'includes/footer.php'; ?>
-  </div>
 
   <script>
     // JavaScript for dynamic functionality

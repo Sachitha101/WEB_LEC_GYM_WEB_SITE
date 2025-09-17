@@ -20,41 +20,85 @@ $userName = $_SESSION['user_name'] ?? 'Guest';
 
     <div class="actions-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
       <!-- Report Issue -->
-      <div class="action-card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showForm('issue')">
-        <div class="action-icon" style="font-size: 3rem; margin-bottom: 1rem;">🚨</div>
+  <a href="?page=feedback_issue" class="action-card" style="display:block; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration:none; color:inherit;">
+        <div class="action-icon" style="margin-bottom: 1rem;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
         <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Report an Issue</h3>
         <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.4;">
           Technical problems, bugs, or system errors
         </p>
-      </div>
+  </a>
 
       <!-- Feature Request -->
-      <div class="action-card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showForm('feature')">
-        <div class="action-icon" style="font-size: 3rem; margin-bottom: 1rem;">💡</div>
+  <a href="?page=feedback_feature" class="action-card" style="display:block; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration:none; color:inherit;">
+        <div class="action-icon" style="margin-bottom: 1rem;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+            <path d="M2 11a10 10 0 1020 0A10 10 0 002 11z"/>
+          </svg>
+        </div>
         <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Feature Request</h3>
         <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.4;">
           Suggest new features or improvements
         </p>
-      </div>
+  </a>
 
       <!-- General Feedback -->
-      <div class="action-card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showForm('general')">
-        <div class="action-icon" style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+  <a href="?page=feedback_general" class="action-card" style="display:block; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration:none; color:inherit;">
+        <div class="action-icon" style="margin-bottom: 1rem;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+          </svg>
+        </div>
         <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">General Feedback</h3>
         <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.4;">
           Share your thoughts and suggestions
         </p>
-      </div>
+  </a>
 
       <!-- Support Ticket -->
-      <div class="action-card" style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease;" onclick="showForm('support')">
-        <div class="action-icon" style="font-size: 3rem; margin-bottom: 1rem;">🎫</div>
+  <a href="?page=feedback_support" class="action-card" style="display:block; padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); text-align: center; cursor: pointer; transition: all 0.3s ease; text-decoration:none; color:inherit;">
+        <div class="action-icon" style="margin-bottom: 1rem;">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M7 5v14"/>
+            <path d="M17 5v14"/>
+          </svg>
+        </div>
         <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem;">Support Ticket</h3>
         <p style="color: var(--fluent-text-secondary); font-size: 0.9rem; line-height: 1.4;">
           Get help with account or billing issues
         </p>
-      </div>
+  </a>
     </div>
+  </div>
+
+  <!-- Quick General Feedback -->
+  <div class="quick-feedback glass-card widgetMorph" style="padding: 2rem; margin-bottom: 2rem;">
+    <h2 style="margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">Quick Feedback</h2>
+    <p style="color: var(--fluent-text-secondary); margin-bottom: 1.5rem;">Share your thoughts quickly without navigating to a separate page.</p>
+    <form id="quickFeedbackForm" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 1rem;">
+      <input type="hidden" name="category" value="general" />
+      <div>
+        <label>Subject *</label>
+        <input name="subject" required class="form-input" placeholder="Brief subject" />
+      </div>
+      <div>
+        <label>Description *</label>
+        <textarea name="description" required class="form-input" rows="4" placeholder="Your feedback..."></textarea>
+      </div>
+      <div>
+        <label>Attachment (optional)</label>
+        <input type="file" name="attachment" />
+      </div>
+      <button class="btn btn-primary" type="submit">Submit Quick Feedback</button>
+    </form>
   </div>
 
   <!-- Feedback Form Container -->
@@ -414,15 +458,15 @@ function showNotification(message, type = 'info') {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     notification.style.cssText = `
-        position: fixed;
-        top: 20px;
+    position: fixed;
+    top: calc(var(--navbar-height, 56px) + 16px);
         right: 20px;
         background: ${type === 'success' ? 'var(--fluent-accent-primary)' : type === 'error' ? '#ef4444' : 'var(--fluent-accent-secondary)'};
         color: white;
         padding: 1rem 1.5rem;
         border-radius: 12px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        z-index: 1000;
+    z-index: 1600;
         animation: slideInRight 0.3s ease-out;
         max-width: 400px;
     `;
@@ -444,5 +488,24 @@ document.addEventListener('click', function(e) {
     if (container.style.display === 'block' && !container.contains(e.target)) {
         hideForm();
     }
+});
+
+// Quick feedback form
+document.getElementById('quickFeedbackForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Submitting...';
+  try{
+    const res = await fetch('api/feedback.php', { method:'POST', body: fd, credentials: 'include' });
+    const json = await res.json();
+    if(!json.success) throw new Error(json.message||'Submit failed');
+    if (window.FitnessAPI?.notifications) FitnessAPI.notifications.success('Quick feedback submitted!');
+    e.target.reset();
+  }catch(err){
+    (window.FitnessAPI?.notifications||{error:alert}).error('Error: ' + err.message);
+  }finally{
+    btn.disabled = false; btn.textContent = 'Submit Quick Feedback';
+  }
 });
 </script>

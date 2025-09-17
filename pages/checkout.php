@@ -206,44 +206,26 @@ $userEmail = $_SESSION['user_email'] ?? '';
       <div class="order-summary glass-card widgetMorph" style="padding: 2rem; position: sticky; top: 2rem;">
         <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem;">Order Summary</h3>
 
-        <!-- Order Items -->
-        <div class="order-items" style="margin-bottom: 2rem;">
-          <div class="order-item" style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <div class="item-image" style="width: 60px; height: 60px; background: var(--fluent-accent-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💪</div>
-            <div class="item-details" style="flex: 1;">
-              <div style="font-weight: 600; margin-bottom: 0.25rem;">Premium Membership</div>
-              <div style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Annual Plan</div>
-            </div>
-            <div class="item-price" style="font-weight: 600; color: var(--fluent-accent-primary);">$299.99</div>
-          </div>
-
-          <div class="order-item" style="display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <div class="item-image" style="width: 60px; height: 60px; background: var(--fluent-accent-secondary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">🏋️</div>
-            <div class="item-details" style="flex: 1;">
-              <div style="font-weight: 600; margin-bottom: 0.25rem;">Protein Shaker Bottle</div>
-              <div style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Black, 32oz</div>
-            </div>
-            <div class="item-price" style="font-weight: 600; color: var(--fluent-accent-primary);">$24.99</div>
-          </div>
-        </div>
+        <!-- Order Items (dynamic) -->
+        <div class="order-items" id="orderItems" style="margin-bottom: 2rem;"></div>
 
         <!-- Order Totals -->
         <div class="order-totals" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem;">
           <div class="total-row" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
             <span style="color: var(--fluent-text-secondary);">Subtotal</span>
-            <span style="font-weight: 600;">$324.98</span>
+            <span id="subtotal" style="font-weight: 600;">$0.00</span>
           </div>
           <div class="total-row" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
             <span style="color: var(--fluent-text-secondary);">Shipping</span>
-            <span style="font-weight: 600;">$9.99</span>
+            <span id="shipping" style="font-weight: 600;">$0.00</span>
           </div>
           <div class="total-row" style="display: flex; justify-content: space-between; margin-bottom: 0.75rem;">
             <span style="color: var(--fluent-text-secondary);">Tax</span>
-            <span style="font-weight: 600;">$27.25</span>
+            <span id="tax" style="font-weight: 600;">$0.00</span>
           </div>
           <div class="total-row" style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 700; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
             <span>Total</span>
-            <span style="color: var(--fluent-accent-primary);">$362.22</span>
+            <span id="grandTotal" style="color: var(--fluent-accent-primary);">$0.00</span>
           </div>
         </div>
 
@@ -256,12 +238,12 @@ $userEmail = $_SESSION['user_email'] ?? '';
         </div>
 
         <!-- Checkout Button -->
-        <button type="submit" form="checkoutForm" class="primary large buttonGlow" id="completeOrderButton" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
+  <button type="submit" form="checkoutForm" class="primary large buttonGlow" id="completeOrderButton" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px;">
             <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
             <line x1="1" y1="10" x2="23" y2="10"/>
           </svg>
-          Complete Order - $362.22
+          <span id="completeOrderLabel">Complete Order - $0.00</span>
         </button>
 
         <!-- Security Notice -->
@@ -284,6 +266,55 @@ $userEmail = $_SESSION['user_email'] ?? '';
 <script>
 // Checkout form handling
 document.addEventListener('DOMContentLoaded', function() {
+    // Render order summary from cart
+    function loadCart() {
+        try {
+            return JSON.parse(localStorage.getItem('fitness_cart') || '[]');
+        } catch { return []; }
+    }
+
+    function money(n){ return `$${(n||0).toFixed(2)}`; }
+
+    function renderOrderSummary() {
+        const items = loadCart();
+        const list = document.getElementById('orderItems');
+        if (!list) return;
+        if (items.length === 0) {
+            list.innerHTML = `
+              <div style="text-align:center; color: var(--fluent-text-secondary); padding:1rem 0;">Your cart is empty. Add items from the <a href='?page=shop'>Shop</a>.</div>
+            `;
+        } else {
+            list.innerHTML = items.map(it => `
+              <div class="order-item" style="display:flex; align-items:center; gap:1rem; padding:1rem 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                <div class="item-image" style="width:60px; height:60px; background: var(--glass-bg, rgba(255,255,255,0.06)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">
+                  ${it.category === 'equipment' ? '🏋️' : it.category === 'supplements' ? '💊' : it.category === 'apparel' ? '👕' : '🛍️'}
+                </div>
+                <div class="item-details" style="flex:1;">
+                  <div style="font-weight:600; margin-bottom:0.25rem;">${it.name}</div>
+                  <div style="color: var(--fluent-text-secondary); font-size:0.9rem;">${it.size ? `Size: ${it.size} ` : ''}${it.color ? `Color: ${it.color} ` : ''}× ${it.quantity || 1}</div>
+                </div>
+                <div class="item-price" style="font-weight:600; color: var(--fluent-accent-primary);">${money((it.price||0) * (it.quantity||1))}</div>
+              </div>
+            `).join('');
+        }
+
+        // totals
+        const subtotal = items.reduce((s, it) => s + (it.price||0) * (it.quantity||1), 0);
+        const shipping = items.length ? 9.99 : 0;
+        const tax = +(subtotal * 0.084).toFixed(2);
+        const total = subtotal + shipping + tax;
+
+        const el = id => document.getElementById(id);
+        if (el('subtotal')) el('subtotal').textContent = money(subtotal);
+        if (el('shipping')) el('shipping').textContent = money(shipping);
+        if (el('tax')) el('tax').textContent = money(tax);
+        if (el('grandTotal')) el('grandTotal').textContent = money(total);
+        if (el('completeOrderLabel')) el('completeOrderLabel').textContent = `Complete Order - ${money(total)}`;
+    }
+
+    renderOrderSummary();
+    window.addEventListener('storage', (e)=>{ if (e.key === 'fitness_cart') renderOrderSummary(); });
+    window.addEventListener('cart:updated', renderOrderSummary);
     // Payment method switching
     document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
         radio.addEventListener('change', function() {

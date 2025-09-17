@@ -1073,6 +1073,15 @@ body{font-family:var(--font-sans); font-size:var(--base-font-size); -webkit-font
 .win11-shell{display:block; min-height:100vh; padding:0; background-color:var(--bg)}
 
 /* NAVBAR */
+/* Reveal animations */
+.reveal-pending{ opacity:0; transform: translateY(10px); }
+.reveal-in{ opacity:1; transform: none; transition: opacity 380ms ease, transform 380ms ease; }
+
+@media (max-width: 768px){
+  #home .hero-content-modern{ grid-template-columns: 1fr !important; }
+  #home .hero-visual-card{ width: 100% !important; height: auto !important; }
+  #powerzone .generator-form{ grid-template-columns: 1fr !important; }
+}
 
 .navbar {
   position: sticky;
@@ -1924,6 +1933,19 @@ button:focus, input:focus, select:focus, textarea:focus, .card:focus, .widget:fo
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
+/* Tier-based theming hooks */
+body.tier-basic .fluent-navbar,
+body.tier-basic .navbar { border-color: rgba(14,165,201,0.18); }
+body.tier-premium .fluent-navbar,
+body.tier-premium .navbar { border-color: rgba(255,215,0,0.28); box-shadow: 0 8px 28px rgba(255,215,0,0.10); }
+body.tier-elite .fluent-navbar,
+body.tier-elite .navbar { border-color: rgba(255,215,0,0.35); box-shadow: 0 10px 34px rgba(255,215,0,0.16); }
+body.tier-elite .brand-text { color: #ffd700; }
+body.tier-premium .brand-text { color: #eab308; }
+
+/* Cart icon animation hook */
+.cart-icon{ display:inline-flex; }
+
 /* Fixed popover to avoid being covered by sticky navbar or clipped by overflow */
 .notification-menu {
   position: fixed;
@@ -1955,6 +1977,22 @@ button:focus, input:focus, select:focus, textarea:focus, .card:focus, .widget:fo
 
 @media (max-width: 640px) {
   .notification-menu { right: 10px; top: 78px; width: min(94vw, 420px); }
+}
+
+/* Responsive helpers */
+.content-card { background: var(--fluent-surface-primary); border: 1px solid var(--glass-border); border-radius: 12px; padding: 16px; box-shadow: var(--shadow-md); }
+.content-card .card-header { margin-bottom: 10px; }
+.content-card .muted { color: var(--fluent-text-secondary); }
+
+img, video, canvas { max-width: 100%; height: auto; }
+table { width: 100%; border-collapse: collapse; }
+table th, table td { padding: 8px 10px; border-bottom: 1px solid rgba(0,0,0,0.06); }
+.table-wrap { width: 100%; overflow-x: auto; }
+
+/* Ensure grid cards stack nicely on small screens */
+@media (max-width: 720px) {
+  .topcards, .dashboard-grid, .shop-grid, .pricing-grid { grid-template-columns: 1fr !important; }
+  .right-panel { padding: 14px; }
 }
 
 .section-entering {
@@ -2050,6 +2088,17 @@ button:focus, input:focus, select:focus, textarea:focus, .card:focus, .widget:fo
   border-bottom: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   transition: all var(--transition-normal);
+}
+.mobile-nav .mobile-nav-item .mobile-nav-icon{ width:22px; height:22px; display:inline-block; margin-right:8px; color: var(--text-primary); }
+.mobile-nav .mobile-nav-item{ display:flex; align-items:center; gap:8px; padding:12px 10px; }
+
+/* Checkout responsive layout */
+@media (max-width: 1024px){
+  #checkout .checkout-container{ grid-template-columns: 1fr; }
+  #checkout .order-summary{ position: static !important; top:auto !important; }
+}
+@media (max-width: 640px){
+  #checkout .progress-steps{ flex-direction: column; gap:12px; }
 }
 
 .navbar-container {
@@ -2591,6 +2640,18 @@ html{
    behind floating UI (cart widget/FAB). This overrides earlier padding rules. */
 .right-panel{
   padding-bottom: calc(28px + var(--fixed-bottom-ui));
+}
+
+/* Ensure content starts below the fixed navbar so titles/headers aren't hidden */
+.right-panel{
+  padding-top: calc(24px + var(--fixed-navbar-offset));
+}
+
+/* When scrolling to sections/headers, keep them below the fixed navbar */
+.section,
+.page-header,
+[id] {
+  scroll-margin-top: calc(var(--fixed-navbar-offset) + 8px);
 }
 
 @media(max-width:560px){

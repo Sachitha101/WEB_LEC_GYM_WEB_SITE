@@ -4,6 +4,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 $userName = $_SESSION['user_name'] ?? 'Guest';
 $userEmail = $_SESSION['user_email'] ?? '';
 $userAvatar = $_SESSION['user_avatar'] ?? '';
+$membershipTier = $_SESSION['membership_tier'] ?? null;
 ?>
 <section id="account" class="section account active" aria-label="Account Management" tabindex="0">
   <!-- Page Header -->
@@ -47,7 +48,14 @@ $userAvatar = $_SESSION['user_avatar'] ?? '';
             <div style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Achievements</div>
           </div>
           <div class="stat">
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--fluent-accent-primary);">Premium</div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size: 1.2rem; font-weight: 800; color: var(--fluent-accent-primary);">
+                <?php echo $membershipTier ? htmlspecialchars(ucfirst($membershipTier)) : 'No Plan'; ?>
+              </span>
+              <?php if ($membershipTier): ?>
+              <span class="badge" style="background: linear-gradient(90deg, rgba(0,194,255,0.18), rgba(14,165,201,0.14)); border:1px solid rgba(14,165,201,0.28); color: var(--accent); padding:2px 8px; border-radius:999px; font-size:0.75rem; font-weight:700;">Active</span>
+              <?php endif; ?>
+            </div>
             <div style="color: var(--fluent-text-secondary); font-size: 0.9rem;">Membership</div>
           </div>
         </div>
