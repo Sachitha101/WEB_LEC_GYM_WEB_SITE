@@ -1,11 +1,5 @@
 <?php
 /*
-Project Roles (Vote to assign):
-1. Database Manager
-2. Backend Developer (PHP)
-3. DevOps & Deployment
-4. Security & Authentication Lead
-5. Documentation & Support
 
 This configuration contains DB credentials and helper functions. Owner: DB Manager + Backend.
 Voting note: changes to DB constants require DevOps/DB approval and should be reviewed before deployment.
